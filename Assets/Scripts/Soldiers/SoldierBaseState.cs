@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBaseState : IState
+public class SoldierBaseState : IState
 {
-    protected Player player;
-    protected PlayerStateMachine playerStateMachine;
+    protected Soldier soldier;
+    protected SoldierStateMachine soldierStateMachine;
     protected Transform model;
 
 
-    public PlayerBaseState(PlayerStateMachine playerStateMachine)
+    public SoldierBaseState(SoldierStateMachine soldierStateMachine)
     {
-        this.playerStateMachine = playerStateMachine;
-        player = playerStateMachine.Player;
-        model = player.model;
+        this.soldierStateMachine = soldierStateMachine;
+        soldier = soldierStateMachine.soldier;
+        model = soldier.model;
     }
 
     public virtual void Enter()
@@ -41,11 +41,11 @@ public class PlayerBaseState : IState
     }
     protected void StartAnimation(int animationHash)
     {
-        player.animator.SetBool(animationHash, true);
+        soldier.animator.SetBool(animationHash, true);
     }
 
     protected void StopAnimation(int animationHash)
     {
-        player.animator.SetBool(animationHash, false);
+        soldier.animator.SetBool(animationHash, false);
     }
 }
