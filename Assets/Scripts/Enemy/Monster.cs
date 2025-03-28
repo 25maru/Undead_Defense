@@ -39,10 +39,9 @@ public class Monster : MonoBehaviour
     protected Animator anim;
     protected State state = State.Idle;
     
-    private static readonly int idleState = Animator.StringToHash("Base Layer.Idle");
-    private static readonly int moveState = Animator.StringToHash("Base Layer.Move");
-    private static readonly int damagedState = Animator.StringToHash("Base Layer.Damaged");
-    private static readonly int attackState = Animator.StringToHash("Base Layer.Attack");
+    private static readonly int moveState = Animator.StringToHash("Move");
+    private static readonly int damagedState = Animator.StringToHash("Damaged");
+    private static readonly int attackState = Animator.StringToHash("Attack");
     private static readonly int dieState = Animator.StringToHash("Base Layer.Die");
     
     public Material[] materials;
@@ -79,8 +78,8 @@ public class Monster : MonoBehaviour
     {
         if(isDead) return;
         
-        anim.SetBool("Move" , state != State.Idle);
-        anim.SetBool("Attack", state == State.Attack);
+        anim.SetBool(moveState , state != State.Idle);
+        anim.SetBool(attackState, state == State.Attack);
         
         if(inRange)
             Attack();

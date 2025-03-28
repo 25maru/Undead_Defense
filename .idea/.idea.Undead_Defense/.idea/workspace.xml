@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b20052c5-87a9-480d-8a49-16d394c0c264" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Undead_Defense/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Undead_Defense/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/External/EmaceArt/NecroPoly Free/Materials/ColliderWorld.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/External/EmaceArt/NecroPoly Free/Materials/ColliderWorld.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/External/GhostCharacter_Free/Materials/MaterialGhost.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/External/GhostCharacter_Free/Materials/MaterialGhost.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/External/GhostCharacter_Free/Materials/ShaderGhost.shadergraph" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/External/GhostCharacter_Free/Materials/ShaderGhost.shadergraph" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Test/CJH_Test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Test/CJH_Test.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Test/CJH_Test/NavMesh.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Test/CJH_Test/NavMesh.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Ghost.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Ghost.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Enemy.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Enemy/Enemy.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Ghost.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Ghost.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Monster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Monster.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ShaderGraphSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +95,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743120078044</updated>
-      <workItem from="1743120079745" duration="10381000" />
+      <workItem from="1743120079745" duration="12359000" />
+      <workItem from="1743151109568" duration="980000" />
     </task>
     <servers />
   </component>
