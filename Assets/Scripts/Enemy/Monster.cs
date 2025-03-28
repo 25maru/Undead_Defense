@@ -36,8 +36,6 @@ public class Monster : MonoBehaviour
     private static readonly int attackState = Animator.StringToHash("Base Layer.Attack");
     private static readonly int dieState = Animator.StringToHash("Base Layer.Die");
     
-    
-
     public Action action;
     protected enum State
     {
@@ -79,6 +77,10 @@ public class Monster : MonoBehaviour
 
     protected virtual void Attack()
     {
+        Vector3 direction = target.position - transform.position; direction.y = 0f;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+        
         ChangeState(State.Attack);
     }
 
@@ -93,7 +95,12 @@ public class Monster : MonoBehaviour
         }
         else
         {
+            Vector3 velocity = Vector3.zero;
             inRange = false;
+            transform.position =
+                Vector3.SmoothDamp(transform.position, navMeshAgent.nextPosition,
+                    ref velocity, 0.1f);
+            
             SetNav();
             ChangeState(State.Move);
         }
@@ -104,10 +111,22 @@ public class Monster : MonoBehaviour
         navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(target.position);
     }
+    
+    public void OnDamage(int damage)
+    {
+        _hp -= damage;
+        if (_hp <= 0)
+            action?.Invoke();
+
+        
+    }
+    
 
     protected virtual void OnDead()
     {
         anim.CrossFade(dieState, 0.1f);
+        ChangeState(State.Dead);
+        
         DropItem();
     }
 
