@@ -21,6 +21,9 @@ public class PlayerIdleState : PlayerBaseState
     public override void Update()
     {
         base.Update();
-        
+        if(player.target != null)
+        {
+            playerStateMachine.ChangeState(playerStateMachine.AttackState);
+        }
     }
 }

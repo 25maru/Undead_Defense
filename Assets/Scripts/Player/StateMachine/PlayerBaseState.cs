@@ -47,12 +47,4 @@ public class PlayerBaseState : IState
     {
         player.animator.SetBool(animationHash, false);
     }
-    protected virtual void Rotate(bool isAttacking = false)
-    {
-        if (targetDirection != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            player.transform.rotation = Quaternion.RotateTowards(player.transform.rotation, targetRotation, player.rotateSpeed * Time.deltaTime);
-        }
-    }
 }
