@@ -4,7 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster : MonoBehaviour
+public interface IChase
+{
+    float chaseDistance { get; set; }
+    void ChaseTarget();
+}
+
+public class Monster : MonoBehaviour, IChase
 {
     [Header("Monster Status")]
     public string monsterName;
@@ -19,12 +25,13 @@ public class Monster : MonoBehaviour
     [SerializeField] private int attackPower;
     public float attackRate;
     private float lastAttackTime;
+    public SphereCollider attackRangeCollider;
     public float distance;      // 공격 가능 거리
     public bool inRange;
 
     [Header("Monster Chase")] 
-    public float chaseDistance; // 타겟 검색 거리
     public float chaseRate;     // 몬스터 검색 범위 벗어날 경우 n초간 따라감
+    [field: SerializeField] public float chaseDistance { get; set; } // 타겟 검색 거리
     private float lastChaseTime;
     private bool isChase;
     
@@ -59,6 +66,7 @@ public class Monster : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        attackRangeCollider = GetComponentInChildren<SphereCollider>();
         // target = null;  // 나중에 메인 기지 세팅
         action += OnDead;
         
@@ -70,6 +78,7 @@ public class Monster : MonoBehaviour
         isDead = false;
         isChase = true;
         _hp = maxHp;
+        attackRangeCollider.radius = distance;
         navMeshAgent.speed = _speed;
         navMeshAgent.SetDestination(target.position);
     }
@@ -105,16 +114,14 @@ public class Monster : MonoBehaviour
 
     protected virtual void Move()
     {
-        if (Vector3.Distance(transform.position, target.position) <= distance)
+        if (inRange)
         {
             navMeshAgent.isStopped = true;
             navMeshAgent.velocity = Vector3.zero;
-            inRange = true;
         }
         else
         {
             Vector3 velocity = Vector3.zero;
-            inRange = false;
             transform.position =
                 Vector3.SmoothDamp(transform.position, navMeshAgent.nextPosition,
                     ref velocity, 0.1f);
@@ -123,7 +130,7 @@ public class Monster : MonoBehaviour
             ChangeState(State.Move);
         }
         
-        SearchInTarget();
+        ChaseTarget();
     }
 
     protected virtual void SetNav()
@@ -132,7 +139,7 @@ public class Monster : MonoBehaviour
         navMeshAgent.SetDestination(target.position);
     }
 
-    private void SearchInTarget()
+    public void ChaseTarget()
     {
         Collider[] colliders;
         if (isChase)
@@ -235,5 +242,29 @@ public class Monster : MonoBehaviour
         
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, distance);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((targetLayer & (1 << other.gameObject.layer)) != 0)
+        {
+            inRange = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if ((targetLayer & (1 << other.gameObject.layer)) != 0)
+        {
+            inRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if ((targetLayer & (1 << other.gameObject.layer)) != 0)
+        {
+            inRange = false;
+        }
     }
 }

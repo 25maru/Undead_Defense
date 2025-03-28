@@ -491,12 +491,12 @@ GameObject:
   - component: {fileID: 5568776343710723838}
   - component: {fileID: 4366346156253207018}
   m_Layer: 0
-  m_Name: SearchRange
+  m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5568776343710723838
 Transform:
   m_ObjectHideFlags: 0
@@ -662,15 +662,16 @@ MonoBehaviour:
   _speed: 5
   attackPower: 5
   attackRate: 2
+  attackRangeCollider: {fileID: 0}
   distance: 2
   inRange: 0
-  chaseDistance: 5
   chaseRate: 5
+  <chaseDistance>k__BackingField: 5
   hpBar: {fileID: 0}
   target: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 8
   materials: []
 --- !u!1 &6353682767374918699
 GameObject:
