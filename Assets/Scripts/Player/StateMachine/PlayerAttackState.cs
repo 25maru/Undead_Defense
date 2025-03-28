@@ -10,16 +10,32 @@ public class PlayerAttackState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(playerStateMachine.Player.AnimationData.AttackParameterHash);
     }
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(playerStateMachine.Player.AnimationData.AttackParameterHash);
     }
     public override void Update()
     {
         base.Update();
-
+        if(player.target == null)
+        {
+            playerStateMachine.ChangeState(playerStateMachine.IdleState);
+        }
+    }
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        Rotate();
+    }
+    void Rotate()
+    {
+        Vector3 direction = player.target.position - player.transform.position;
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            player.model.transform.localRotation = Quaternion.RotateTowards(model.transform.localRotation, targetRotation, player.rotateSpeed);
+        }
     }
 }

@@ -15,7 +15,7 @@ public class StateMachine : MonoBehaviour
 {
     protected IState currentState;
 
-    public void ChangeState(IState state)
+    public virtual void ChangeState(IState state)
     {
         currentState?.Exit();
         currentState = state;
