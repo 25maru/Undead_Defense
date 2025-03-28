@@ -67,7 +67,7 @@ public class Monster : MonoBehaviour, IChase
         anim = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         attackRangeCollider = GetComponentInChildren<SphereCollider>();
-        // target = null;  // 나중에 메인 기지 세팅
+        target = TestHomeTarget.Instance.transform;  // 나중에 메인 기지 세팅
         action += OnDead;
         
         SearchMaterial();

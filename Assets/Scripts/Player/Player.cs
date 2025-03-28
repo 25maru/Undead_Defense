@@ -56,14 +56,14 @@ public class Player : MonoBehaviour
         Vector3 movedirection = new Vector3(curMoveInput.x, 0 ,curMoveInput.y);
         Controller.Move(movedirection * moveSpeed * Time.deltaTime);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        targets.Add(other.transform);
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        targets.Remove(other.transform);
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     targets.Add(other.transform);
+    // }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     targets.Remove(other.transform);
+    // }
     void SetTarget()
     {
         if(targets.Count == 0)

@@ -15,15 +15,28 @@ MonoBehaviour:
   levelName: 
   nightStartTime: 30
   enemyWaves:
-  - day: 0
+  - day: 1
     spawnGroups:
-    - spawnPoint: {fileID: 0}
+    - spawnPoint: {fileID: 8299078972544314542, guid: 1c560eeafdf77034cb6a3d64ec28cb3c,
+        type: 3}
       enemies:
-      - enemyPrefab: {fileID: 0}
-        count: 0
-        delayBetweenSpawn: 0
-    - spawnPoint: {fileID: 0}
+      - enemyPrefab: {fileID: 6346920272280219943, guid: 4aafda7fdb9419f468d30d277d441219,
+          type: 3}
+        count: 5
+        delayBetweenSpawn: 1
+  - day: 2
+    spawnGroups:
+    - spawnPoint: {fileID: 8299078972544314542, guid: 1c560eeafdf77034cb6a3d64ec28cb3c,
+        type: 3}
       enemies:
-      - enemyPrefab: {fileID: 0}
-        count: 0
-        delayBetweenSpawn: 0
+      - enemyPrefab: {fileID: 6346920272280219943, guid: 4aafda7fdb9419f468d30d277d441219,
+          type: 3}
+        count: 5
+        delayBetweenSpawn: 1
+    - spawnPoint: {fileID: 7819797151347476377, guid: 70936962102d8c54cbca6bf40b2240aa,
+        type: 3}
+      enemies:
+      - enemyPrefab: {fileID: 6346920272280219943, guid: 4aafda7fdb9419f468d30d277d441219,
+          type: 3}
+        count: 10
+        delayBetweenSpawn: 0.5
