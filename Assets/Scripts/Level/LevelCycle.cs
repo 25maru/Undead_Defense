@@ -11,7 +11,6 @@ public class LevelCycle : MonoBehaviour
     [Header("레벨 데이터")]
     [SerializeField] private LevelData levelData;
 
-    private float timer;
     private int currentDay = 1;
     private CycleState currentState = CycleState.Day;
 
@@ -27,27 +26,20 @@ public class LevelCycle : MonoBehaviour
 
     private void Start()
     {
-        timer = 0f;
         currentState = CycleState.Day;
         OnDayStarted?.Invoke(currentDay);
     }
 
     private void Update()
     {
-        if (currentState == CycleState.Day)
+        if (currentState == CycleState.Day && Input.GetKey(KeyCode.Space))
         {
-            timer += Time.deltaTime;
-
-            if (timer >= levelData.nightStartTime)
-            {
-                StartNight();
-            }
+            StartNight();
         }
     }
 
     private void StartNight()
     {
-        timer = 0f;
         currentState = CycleState.Night;
         Debug.Log($"밤 시작 - {currentDay}일차");
         OnNightStarted?.Invoke(currentDay);
@@ -55,7 +47,6 @@ public class LevelCycle : MonoBehaviour
 
     private void StartDay()
     {
-        timer = 0f;
         currentState = CycleState.Day;
         currentDay++;
         Debug.Log($"낮 시작 - {currentDay}일차");
