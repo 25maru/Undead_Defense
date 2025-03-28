@@ -19,8 +19,8 @@ public class ConstructionController : MonoBehaviour
         if (testMode)
         {
             Debug.Log("[건설 테스트] 테스트 모드로 초기화");
-            // StartConstruction(new DefensiveBuilding());
-            StartConstruction(new ProductionBuilding());
+            StartConstruction(new DefensiveBuilding());
+            // StartConstruction(new ProductionBuilding());
         }
         
     }

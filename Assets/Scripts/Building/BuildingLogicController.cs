@@ -15,6 +15,14 @@ public class BuildingLogicController : MonoBehaviour
         isBuilt = true;
     }
 
+    private void Update()
+    {
+        if (isBuilt && building != null)
+        {
+            building.Tick(this);
+        }
+    }
+    
     public void Upgrade()
     {
         if (building == null) return;
