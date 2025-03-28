@@ -73,15 +73,11 @@ public class LevelManager : MonoSingleton<LevelManager>
 
             GameObject enemy = Instantiate(spawnInfo.enemyPrefab, spawnPos, Quaternion.identity);
 
-            // TODO: Enemy 클래스가 추가되면 주석 해제
-            // Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            // if (enemyComponent != null)
-            // {
-            //     enemyComponent.OnEnemyDie += ReportEnemyDeath;
-            //     enemiesAlive++;
-            // }
-
-            enemiesAlive++;
+            if (enemy.TryGetComponent<Monster>(out var monster))
+            {
+                monster.action += ReportEnemyDeath;
+                enemiesAlive++;
+            }
 
             Debug.Log($"적 소환: {spawnInfo.enemyPrefab.name} ({i + 1}/{spawnInfo.count}) @ {point.name}");
             yield return new WaitForSeconds(spawnInfo.delayBetweenSpawn);

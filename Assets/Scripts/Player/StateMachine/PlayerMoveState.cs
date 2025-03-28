@@ -25,5 +25,12 @@ public class PlayerMoveState : PlayerBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        Rotate();
+    }
+    void Rotate()
+    {
+        float rotateDgree = Mathf.Atan2(player.curMoveInput.x, player.curMoveInput.y);
+        rotateDgree *= Mathf.Rad2Deg;
+        model.localRotation = Quaternion.RotateTowards(model.localRotation, Quaternion.Euler(0,rotateDgree,0),player.rotateSpeed);
     }
 }
