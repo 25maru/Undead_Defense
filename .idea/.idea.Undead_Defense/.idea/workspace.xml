@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b20052c5-87a9-480d-8a49-16d394c0c264" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Undead_Defense/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Undead_Defense/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Enemy.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Enemy/Enemy.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Ghost.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Ghost.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Monster.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Monster.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/HKK_TestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/HKK_TestScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Building/DefensiveBuilding.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Building/DefensiveBuilding.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,10 +18,46 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a19d22dcf90a4588a1b2c49c248263ed174000/62/e1e4be74/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Prefabs/ATK_Tower1.prefab" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/Building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/Building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/Building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/Building.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/BuildingLogicController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ConstructionController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/DefensiveBuilding.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/DefensiveBuilding.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ProductionBuilding.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ProductionBuilding.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ProductionBuilding.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/hyunkyokim/hk-study/unity/Undead_Defense/Assets/Scripts/Building/ProductionBuilding.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/Ghost.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/Monster.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.shadergraph@14.0.9/Editor/Data/Graphs/SerializableTexture.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -31,18 +66,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/cjh__enemy&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "feature/hkk__building",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Standalone Player.Start Unity">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.17f1\Editor\Unity.exe" />
@@ -95,14 +130,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743120078044</updated>
-      <workItem from="1743120079745" duration="12359000" />
-      <workItem from="1743151109568" duration="980000" />
+      <workItem from="1743120079745" duration="2496000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
@@ -112,5 +147,6 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
