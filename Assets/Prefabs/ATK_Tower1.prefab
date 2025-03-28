@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5110220760857225063}
   - component: {fileID: 8218366101774660570}
   - component: {fileID: 6747135118371108072}
-  - component: {fileID: 8071118688190893910}
+  - component: {fileID: 2418000960287145862}
   m_Layer: 0
   m_Name: ATK_Tower1
   m_TagString: Untagged
@@ -108,7 +108,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8049862245940594034, guid: 87248c1330e83f84caaffc11a8e96746, type: 3}
---- !u!114 &8071118688190893910
+--- !u!114 &2418000960287145862
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,8 +117,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1139317054813260388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad384b0d6b18443dab87d04f9dc68b36, type: 3}
+  m_Script: {fileID: 11500000, guid: b006c72428a54a6d99e62d883fb1f274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 958331269451419535, guid: 71145a878c5d8438c80fa756b4437384,
     type: 3}
+  upgradedPrefab: {fileID: 0}

@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 7834184736167360938}
   - component: {fileID: 1782469175424406231}
   - component: {fileID: 4665033017869070532}
-  - component: {fileID: 5449121087544237708}
   m_Layer: 0
   m_Name: Gold_Tower1
   m_TagString: Untagged
@@ -199,16 +198,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 3b21b4347c12d314bb3a9bb775e83588, type: 2}
---- !u!114 &5449121087544237708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6497782787365230226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad384b0d6b18443dab87d04f9dc68b36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
