@@ -41,11 +41,11 @@ public class BulletController : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            // var enemy = other.GetComponent<EnemyController>();
-            // if (enemy != null)
-            // {
-            //     enemy.TakeDamage(damage);
-            // }
+            var enemy = other.GetComponent<Monster>();
+            if (enemy != null)
+            {
+                enemy.OnHit(damage);
+            }
 
             Destroy(gameObject);
         }
