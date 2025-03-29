@@ -7,7 +7,7 @@ public class SoldierBaseState : IState
     protected Soldier soldier;
     protected SoldierStateMachine soldierStateMachine;
     protected Transform model;
-
+    protected Vector3 moveDirection;
 
     public SoldierBaseState(SoldierStateMachine soldierStateMachine)
     {
@@ -33,7 +33,7 @@ public class SoldierBaseState : IState
 
     public virtual void PhysicsUpdate()
     {
-
+        Move();
     }
 
     public virtual void Update()
@@ -47,5 +47,10 @@ public class SoldierBaseState : IState
     protected void StopAnimation(int animationHash)
     {
         soldier.animator.SetBool(animationHash, false);
+    }
+    protected virtual void Move()
+    {
+        //겹침 밀어내기 로직 추가필요
+        soldier.Controller.Move(moveDirection * Time.deltaTime);
     }
 }

@@ -22,7 +22,7 @@ public class SoldierMoveState : SoldierBaseState
     {
         base.Update();
         CheckOrderPosition();
-        if(soldier.target == null)
+        if(soldier.target == null && soldier.orderTarget == null)
         {
             soldierStateMachine.ChangeState(soldierStateMachine.IdleState);
             return;
@@ -33,19 +33,26 @@ public class SoldierMoveState : SoldierBaseState
             return;
         }
     }
-    public override void HandleInput()
-    {
-        base.HandleInput();
-        soldier.agent.SetDestination(soldier.orderTarget != null ? soldier.orderTarget.position : soldier.target.position);
-    }
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        Move();
+        Rotate();
     }
-    void Move()
+    protected override void Move()
     {
-        
+        soldier.agent.SetDestination(soldier.orderTarget != null ? soldier.orderTarget.position : soldier.target.position);
+        moveDirection = soldier.agent.desiredVelocity;
+        base.Move();
+    }
+    void Rotate()
+    {
+        Vector3 direction = moveDirection;
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation, targetRotation, soldier.rotateSpeed);
+        }
     }
     void CheckOrderPosition()
     {

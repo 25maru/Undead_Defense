@@ -16,4 +16,27 @@ public class SoldierAttackState : SoldierBaseState
         base.Exit();
         StopAnimation(soldier.AnimationData.AttackParameterHash);
     }
+    public override void Update()
+    {
+        base.Update();
+        if (soldier.target == null || Vector3.Distance(soldier.target.position, soldier.transform.position) >= soldier.attackDistance)
+        {
+
+        }
+    }
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        Rotate();
+    }
+    void Rotate()
+    {
+        Vector3 direction = soldier.target.position - soldier.transform.position;
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation, targetRotation, soldier.rotateSpeed);
+        }
+    }
 }
