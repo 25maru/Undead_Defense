@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e2b071de5d39441b794808e6e7c3a4, type: 3}
   m_Name: Wave 5
   m_EditorClassIdentifier: 
-  day: 5
+  day: 2
   spawnGroups:
   - spawnPointIndex: 0
     enemies:
     - enemyPrefab: {fileID: 6346920272280219943, guid: 4aafda7fdb9419f468d30d277d441219,
         type: 3}
+      enemyIcon: {fileID: 21300000, guid: 0a7695f3160009048bd1bd40ed388822, type: 3}
       count: 15
       delayBetweenSpawn: 1
   - spawnPointIndex: 1
     enemies:
-    - enemyPrefab: {fileID: 6346920272280219943, guid: 4aafda7fdb9419f468d30d277d441219,
+    - enemyPrefab: {fileID: 6346920272280219943, guid: a592c0a0cbe9e164cb819ae6b21afb06,
         type: 3}
+      enemyIcon: {fileID: -923788480, guid: 526d52f78c90d9a4484eb972ff9ebeb8, type: 3}
       count: 15
       delayBetweenSpawn: 1

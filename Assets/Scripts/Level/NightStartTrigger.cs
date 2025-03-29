@@ -1,6 +1,8 @@
 using TMPro;    
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using DG.Tweening;
 
 /// <summary>
@@ -9,37 +11,85 @@ using DG.Tweening;
 [RequireComponent(typeof(SphereCollider))]
 public class NightStartTrigger : MonoBehaviour
 {
-    [Header("Hold Time 설정")]
+    [Header("트리거 영역")]
+    [SerializeField] private SphereCollider triggerZone;
+    [SerializeField] private float radius = 20f;
+
+    [Header("입력 설정")]
+    [SerializeField] private KeyCode holdKey = KeyCode.Space;
     [SerializeField] private float holdDuration = 2f;
 
-    [Header("UI 구성요소")]
+    [Header("UI")]
     [SerializeField] private GameObject nightUIRoot;
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Image radialFillImage;
 
     [Header("낮 / 밤")]
+    [SerializeField] private Volume globalVolume;
     [SerializeField] private Light directionalLight;
+    [SerializeField] private Ease transitionEase = Ease.OutQuad;
+    [SerializeField] private float transitionDuration = 1f;
 
-    private float holdTimer = 0f;
-    private bool playerInZone = false;
-    private bool isHolding = false;
-
-    private float lightDayXRotation = 50f;
-    private float lightNightXRotation = 230f;
+    [Header("디버그 (테스트용)")]
+    [SerializeField] private bool testMode;
 
     private LevelCycle levelCycle;
+
+    private ColorAdjustments colorAdjustments;
+    private readonly float dayExposure = 0.6f;
+    private readonly float nightExposure = -0.6f;
+
+    private readonly float lightDayXRotation = 50f;
+    private readonly float lightNightXRotation = 230f;
+
+    private bool playerInZone = false;
+    private bool isHolding = false;
+    private float holdTimer = 0f;
 
     private void Start()
     {
         levelCycle = LevelManager.Instance.Cycle;
         nightUIRoot.SetActive(false);
+
+        if (!globalVolume.profile.TryGet(out colorAdjustments))
+        {
+            Debug.LogWarning("NightStartTrigger: ColorAdjustments가 Volume 프로파일에 없습니다.");
+        }
     }
 
     private void Update()
     {
+        if (testMode && playerInZone && levelCycle.CurrentState != LevelCycle.CycleState.Day)
+        {
+            if (Input.GetKey(holdKey))
+            {
+                if (!isHolding)
+                {
+                    isHolding = true;
+                    nightUIRoot.SetActive(true);
+                }
+
+                holdTimer += Time.deltaTime;
+                float remain = Mathf.Clamp(holdDuration - holdTimer, 0f, holdDuration);
+
+                countdownText.text = $"DAY IN  {remain:F1}s";
+                radialFillImage.fillAmount = 1f - remain / holdDuration;
+
+                if (holdTimer >= holdDuration)
+                {
+                    levelCycle.StartDay();
+                    ResetHold();
+                }
+            }
+            else if (isHolding)
+            {
+                ResetHold();
+            }
+        }
+
         if (!playerInZone || levelCycle.CurrentState != LevelCycle.CycleState.Day) return;
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(holdKey))
         {
             if (!isHolding)
             {
@@ -55,16 +105,8 @@ public class NightStartTrigger : MonoBehaviour
 
             if (holdTimer >= holdDuration)
             {
-                DOTween.Kill(directionalLight);
-                directionalLight.transform.DORotate(new Vector3(lightNightXRotation, 0f, 0f), 1f)
-                    .SetEase(Ease.InOutSine)
-                    .OnComplete(() =>
-                    {
-                        levelCycle.ForceStartNight();
-                        ResetHold();
-                    });
-
-                nightUIRoot.SetActive(false);
+                levelCycle.StartNight();
+                ResetHold();
             }
         }
         else if (isHolding)
@@ -78,7 +120,6 @@ public class NightStartTrigger : MonoBehaviour
         isHolding = false;
         holdTimer = 0f;
         nightUIRoot.SetActive(false);
-        countdownText.text = string.Empty;
         radialFillImage.fillAmount = 0f;
     }
 
@@ -100,12 +141,64 @@ public class NightStartTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// 낮으로 회전 애니메이션 (레벨 사이클이 낮이 될 때 호출하도록)
+    /// 낮 전환 시 조명 회전 연출과 볼륨 노출값을 복원합니다.
     /// </summary>
-    public void RotateToDayLight()
+    public void PlayDayTransition(System.Action onComplete)
     {
-        DOTween.Kill(directionalLight);
-        directionalLight.transform.DORotate(new Vector3(lightDayXRotation, 0f, 0f), 1f)
-            .SetEase(Ease.InOutSine);
+        if (colorAdjustments != null)
+        {
+            DOTween.To(() => colorAdjustments.postExposure.value,
+                v => colorAdjustments.postExposure.value = v,
+                dayExposure,
+                transitionDuration);
+        }
+
+        if (directionalLight == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        Vector3 currentRotation = directionalLight.transform.eulerAngles;
+        Vector3 targetRotation = new(lightDayXRotation, currentRotation.y, currentRotation.z);
+
+        directionalLight.transform.DORotate(targetRotation, transitionDuration)
+            .SetEase(transitionEase)
+            .OnComplete(() => onComplete?.Invoke());
     }
+
+    /// <summary>
+    /// 밤 전환 시 조명 회전 연출과 볼륨 노출값을 낮춥니다.
+    /// </summary>
+    public void PlayNightTransition(System.Action onComplete)
+    {
+        if (colorAdjustments != null)
+        {
+            DOTween.To(() => colorAdjustments.postExposure.value,
+                v => colorAdjustments.postExposure.value = v,
+                nightExposure,
+                transitionDuration);
+        }
+
+        if (directionalLight == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        Vector3 currentRotation = directionalLight.transform.eulerAngles;
+        Vector3 targetRotation = new(lightNightXRotation, currentRotation.y, currentRotation.z);
+
+        directionalLight.transform.DORotate(targetRotation, transitionDuration)
+            .SetEase(transitionEase)
+            .OnComplete(() => onComplete?.Invoke());
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
+#endif
 }

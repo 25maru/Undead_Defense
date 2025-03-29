@@ -8,8 +8,14 @@ using UnityEngine.UI;
 public class SpawnPreviewUI : MonoBehaviour
 {
     [Header("UI Elements")]
+    [SerializeField] private Canvas canvas;
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI countText;
+
+    private void Start()
+    {
+        canvas.worldCamera = Camera.main;
+    }
 
     /// <summary>
     /// 아이콘과 수량 정보를 설정합니다.

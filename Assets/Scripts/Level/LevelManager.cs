@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// 레벨 전체 흐름을 관리하는 매니저 클래스입니다.
@@ -16,30 +17,105 @@ public class LevelManager : MonoSingleton<LevelManager>
     [Header("씬에 배치된 스폰 포인트들")]
     [SerializeField] private List<SpawnPoint> sceneSpawnPoints;
 
+    [Header("낮 / 밤 전환 연출")]
+    [SerializeField] private NightStartTrigger nightTrigger;
+
+    /// <summary>
+    /// 외부 접근을 위한 Cycle 프로퍼티
+    /// </summary>
     public LevelCycle Cycle => levelCycle;
 
     private int enemiesAlive = 0;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+        levelCycle.SetLevelData(levelData);
+    }
+
     private void Start()
     {
-        levelCycle.SetLevelData(levelData);
         levelCycle.OnNightStarted += HandleNightStarted;
         levelCycle.OnDayStarted += HandleDayStarted;
 
         Debug.Log("LevelManager: 레벨 시작됨");
+        levelCycle.InvokeInitialDay();
     }
 
     private void OnDestroy()
     {
-        levelCycle.OnNightStarted -= HandleNightStarted;
-        levelCycle.OnDayStarted -= HandleDayStarted;
+        if (levelCycle != null)
+        {
+            levelCycle.OnNightStarted -= HandleNightStarted;
+            levelCycle.OnDayStarted -= HandleDayStarted;
+        }
     }
 
     /// <summary>
-    /// 밤이 시작될 때 호출되어 적 스폰을 트리거합니다.
+    /// 낮 상태 진입 처리. 연출 후 낮 관련 세팅 수행.
     /// </summary>
-    private void HandleNightStarted(int day)
+    private void HandleDayStarted(int day)
     {
+        Debug.Log($"LevelManager: {day}일차 낮 시작됨 → 연출 및 프리뷰 표시");
+
+        if (nightTrigger != null)
+        {
+            nightTrigger.PlayDayTransition(() =>
+            {
+                SetupDayPhase(day);
+            });
+        }
+        else
+        {
+            SetupDayPhase(day);
+        }
+    }
+
+    /// <summary>
+    /// 밤 상태 진입 처리. 연출 후 밤 관련 세팅 수행
+    /// </summary>
+    private void HandleNightStarted()
+    {
+        if (nightTrigger != null)
+        {
+            nightTrigger.PlayNightTransition(() =>
+            {
+                SetupNightPhase();
+            });
+        }
+        else
+        {
+            SetupNightPhase();
+        }
+    }
+
+    /// <summary>
+    /// 낮 시작 시 프리뷰 표시를 포함한 로직 처리
+    /// </summary>
+    private void SetupDayPhase(int day)
+    {
+        var wave = levelCycle.GetWaveDataForCurrentDay();
+        if (wave == null) return;
+
+        foreach (var group in wave.spawnGroups)
+        {
+            if (group.enemies.Count == 0) continue;
+            var info = group.enemies[0];
+
+            int index = group.spawnPointIndex;
+            if (index >= 0 && index < sceneSpawnPoints.Count)
+            {
+                sceneSpawnPoints[index].ShowPreview(info.count, info.enemyIcon);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 밤 시작 시 적 웨이브 확인 및 스폰 처리
+    /// </summary>
+    private void SetupNightPhase()
+    {
+        int day = levelCycle.CurrentDay;
         Debug.Log($"LevelManager: {day}일차 밤 시작 → 적 웨이브 확인");
 
         var wave = levelCycle.GetWaveDataForCurrentDay();
@@ -63,38 +139,12 @@ public class LevelManager : MonoSingleton<LevelManager>
             Debug.LogWarning($"LevelManager: {day}일차에 해당하는 웨이브가 없습니다.");
         }
 
-        foreach (var sp in sceneSpawnPoints)
+        foreach (var spawn in sceneSpawnPoints)
         {
-            sp.HidePreview();
+            spawn.HidePreview();
         }
     }
 
-    /// <summary>
-    /// 낮이 시작될 때 → 적 미리보기 UI 표시
-    /// </summary>
-    private void HandleDayStarted(int day)
-    {
-        var wave = levelCycle.GetWaveDataForCurrentDay();
-        if (wave == null) return;
-
-        foreach (var group in wave.spawnGroups)
-        {
-            if (group.enemies.Count == 0) continue;
-            var info = group.enemies[0];
-
-            int index = group.spawnPointIndex;
-            if (index >= 0 && index < sceneSpawnPoints.Count)
-            {
-                SpriteRenderer renderer = info.enemyPrefab.GetComponentInChildren<SpriteRenderer>();
-                Sprite icon = renderer != null ? renderer.sprite : null;
-                sceneSpawnPoints[index].ShowPreview(info.count, icon);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 스폰 그룹 내 적들을 순차적으로 생성합니다.
-    /// </summary>
     private IEnumerator SpawnEnemies(EnemyWaveData.SpawnGroup group, SpawnPoint spawnPoint)
     {
         foreach (var enemyInfo in group.enemies)
@@ -103,9 +153,15 @@ public class LevelManager : MonoSingleton<LevelManager>
             {
                 GameObject enemy = Instantiate(enemyInfo.enemyPrefab, spawnPoint.GetSpawnPosition(), Quaternion.identity);
 
-                if (enemy.TryGetComponent<Monster>(out var monster))
+                if (enemy.TryGetComponent(out Monster monster))
                 {
-                    monster.action += ReportEnemyDeath;
+                    void OnMonsterDeath()
+                    {
+                        monster.action -= OnMonsterDeath;
+                        ReportEnemyDeath();
+                    }
+
+                    monster.action += OnMonsterDeath;
                     enemiesAlive++;
                 }
 
@@ -114,16 +170,13 @@ public class LevelManager : MonoSingleton<LevelManager>
         }
     }
 
-    /// <summary>
-    /// 적이 죽었을 때 호출되어 남은 적 수를 관리하고, 모두 죽으면 낮을 시작합니다.
-    /// </summary>
-    public void ReportEnemyDeath()
+    private void ReportEnemyDeath()
     {
         enemiesAlive--;
         if (enemiesAlive <= 0)
         {
-            Debug.Log("모든 적이 처치됨! 낮으로 전환합니다.");
-            levelCycle.ForceStartDay();
+            Debug.Log("LevelManager: 모든 적 처치됨 → 낮 시작");
+            levelCycle.StartDay();
         }
     }
 }

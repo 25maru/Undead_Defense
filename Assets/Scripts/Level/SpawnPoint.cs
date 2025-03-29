@@ -36,9 +36,9 @@ public class SpawnPoint : MonoBehaviour
     {
         if (previewUIPrefab == null || previewInstance != null) return;
 
-        previewInstance = Instantiate(previewUIPrefab, transform.position + Vector3.up * 2f, Quaternion.identity, transform);
+        previewInstance = Instantiate(previewUIPrefab, transform.position, Quaternion.identity, transform);
 
-        if (previewInstance.TryGetComponent<SpawnPreviewUI>(out var ui))
+        if (previewInstance.TryGetComponent(out SpawnPreviewUI ui))
         {
             ui.SetInfo(count, enemyIcon);
         }

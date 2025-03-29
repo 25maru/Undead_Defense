@@ -34,6 +34,7 @@ public class EnemyWaveData : ScriptableObject
     public class EnemySpawnInfo
     {
         public GameObject enemyPrefab;
+        public Sprite enemyIcon;
         public int count = 1;
         public float delayBetweenSpawn = 0.5f;
     }
