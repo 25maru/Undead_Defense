@@ -9,39 +9,52 @@ using UnityEngine;
 /// </summary>
 public class LevelManager : MonoSingleton<LevelManager>
 {
-    [Header("레벨 데이터")]
+    [Header("레벨 구성 요소")]
     [SerializeField] private LevelData levelData;
-
-    [Header("사이클 컨트롤러")]
     [SerializeField] private LevelCycle levelCycle;
+
+    [Header("씬에 배치된 스폰 포인트들")]
+    [SerializeField] private List<SpawnPoint> sceneSpawnPoints;
+
+    public LevelCycle Cycle => levelCycle;
 
     private int enemiesAlive = 0;
     
     private void Start()
     {
-        // 사이클 이벤트 등록
+        levelCycle.SetLevelData(levelData);
         levelCycle.OnNightStarted += HandleNightStarted;
         levelCycle.OnDayStarted += HandleDayStarted;
 
         Debug.Log("LevelManager: 레벨 시작됨");
     }
 
+    private void OnDestroy()
+    {
+        levelCycle.OnNightStarted -= HandleNightStarted;
+        levelCycle.OnDayStarted -= HandleDayStarted;
+    }
+
     /// <summary>
-    /// 밤이 시작되면 해당 일차에 맞는 적 웨이브를 소환합니다.
+    /// 밤이 시작될 때 호출되어 적 스폰을 트리거합니다.
     /// </summary>
-    /// <param name="day">현재 밤의 날짜 (1일부터 시작)</param>
     private void HandleNightStarted(int day)
     {
         Debug.Log($"LevelManager: {day}일차 밤 시작 → 적 웨이브 확인");
 
-        var wave = levelData.enemyWaves.Find(w => w.day == day);
+        var wave = levelCycle.GetWaveDataForCurrentDay();
         if (wave != null)
         {
             foreach (var group in wave.spawnGroups)
             {
-                foreach (var spawn in group.enemies)
+                int index = group.spawnPointIndex;
+                if (index >= 0 && index < sceneSpawnPoints.Count)
                 {
-                    StartCoroutine(SpawnEnemies(spawn, group.spawnPoint));
+                    StartCoroutine(SpawnEnemies(group, sceneSpawnPoints[index]));
+                }
+                else
+                {
+                    Debug.LogWarning($"LevelManager: 유효하지 않은 SpawnPointIndex {index} (씬에 등록된 포인트 수: {sceneSpawnPoints.Count})");
                 }
             }
         }
@@ -49,38 +62,55 @@ public class LevelManager : MonoSingleton<LevelManager>
         {
             Debug.LogWarning($"LevelManager: {day}일차에 해당하는 웨이브가 없습니다.");
         }
+
+        foreach (var sp in sceneSpawnPoints)
+        {
+            sp.HidePreview();
+        }
     }
 
     /// <summary>
-    /// 낮 시작 시 처리할 로직 (예: 리셋, 보상 등)
+    /// 낮이 시작될 때 → 적 미리보기 UI 표시
     /// </summary>
     private void HandleDayStarted(int day)
     {
-        Debug.Log($"LevelManager: {day}일차 낮 시작");
-        // TODO: 낮 시간 처리 로직 추가 (예: 건설, 업그레이드)
+        var wave = levelCycle.GetWaveDataForCurrentDay();
+        if (wave == null) return;
+
+        foreach (var group in wave.spawnGroups)
+        {
+            if (group.enemies.Count == 0) continue;
+            var info = group.enemies[0];
+
+            int index = group.spawnPointIndex;
+            if (index >= 0 && index < sceneSpawnPoints.Count)
+            {
+                SpriteRenderer renderer = info.enemyPrefab.GetComponentInChildren<SpriteRenderer>();
+                Sprite icon = renderer != null ? renderer.sprite : null;
+                sceneSpawnPoints[index].ShowPreview(info.count, icon);
+            }
+        }
     }
 
     /// <summary>
-    /// 적 개별 스폰 코루틴. 일정 간격으로 적을 생성합니다.
+    /// 스폰 그룹 내 적들을 순차적으로 생성합니다.
     /// </summary>
-    private IEnumerator SpawnEnemies(EnemySpawnInfo spawnInfo, SpawnPoint point)
+    private IEnumerator SpawnEnemies(EnemyWaveData.SpawnGroup group, SpawnPoint spawnPoint)
     {
-        for (int i = 0; i < spawnInfo.count; i++)
+        foreach (var enemyInfo in group.enemies)
         {
-            Vector3 offset = Random.insideUnitSphere * 1.5f;
-            offset.y = 0;
-            Vector3 spawnPos = point.transform.position + offset;
-
-            GameObject enemy = Instantiate(spawnInfo.enemyPrefab, spawnPos, Quaternion.identity);
-
-            if (enemy.TryGetComponent<Monster>(out var monster))
+            for (int i = 0; i < enemyInfo.count; i++)
             {
-                monster.action += ReportEnemyDeath;
-                enemiesAlive++;
-            }
+                GameObject enemy = Instantiate(enemyInfo.enemyPrefab, spawnPoint.GetSpawnPosition(), Quaternion.identity);
 
-            Debug.Log($"적 소환: {spawnInfo.enemyPrefab.name} ({i + 1}/{spawnInfo.count}) @ {point.name}");
-            yield return new WaitForSeconds(spawnInfo.delayBetweenSpawn);
+                if (enemy.TryGetComponent<Monster>(out var monster))
+                {
+                    monster.action += ReportEnemyDeath;
+                    enemiesAlive++;
+                }
+
+                yield return new WaitForSeconds(enemyInfo.delayBetweenSpawn);
+            }
         }
     }
 

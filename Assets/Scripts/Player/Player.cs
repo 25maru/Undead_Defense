@@ -40,12 +40,12 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.phase == InputActionPhase.Performed)
         {
             curMoveInput = context.ReadValue<Vector2>();
             playerStateMachine.ChangeState(playerStateMachine.MoveState);
         }
-        else if (context.canceled)
+        if (context.phase == InputActionPhase.Canceled)
         {
             curMoveInput = Vector2.zero;
             playerStateMachine.ChangeState(playerStateMachine.IdleState);

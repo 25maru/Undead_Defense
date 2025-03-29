@@ -11,7 +11,7 @@ public interface IState
     public void Update();
     public void PhysicsUpdate();
 }
-public class StateMachine : MonoBehaviour
+public class StateMachine
 {
     protected IState currentState;
 
