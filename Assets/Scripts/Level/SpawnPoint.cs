@@ -41,6 +41,7 @@ public class SpawnPoint : MonoBehaviour
         if (previewInstance.TryGetComponent(out SpawnPreviewUI ui))
         {
             ui.SetInfo(count, enemyIcon);
+            ui.SetPreviewVisible(true);
         }
     }
 
@@ -51,7 +52,13 @@ public class SpawnPoint : MonoBehaviour
     {
         if (previewInstance != null)
         {
-            Destroy(previewInstance);
+            if (previewInstance.TryGetComponent(out SpawnPreviewUI ui))
+            {
+                ui.SetPreviewVisible(false, () =>
+                {
+                    Destroy(previewInstance);
+                });
+            }
         }
     }
 

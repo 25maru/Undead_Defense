@@ -37,17 +37,40 @@ public class BulletController : MonoBehaviour
         transform.forward = dir; // 방향 맞춰주면 충돌 박음
     }
 
-    private void OnTriggerEnter(Collider other)
+    // ****************************************************************************************************
+    // 테스트를 위해 임시로 수정했습니다. (충돌 시 작업하신걸로 덮어씌워주세요!)
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("Enemy"))
+    //     {
+    //         var enemy = other.GetComponent<Monster>();
+    //         if (enemy != null)
+    //         {
+    //             enemy.OnHit(damage);
+    //         }
+
+    //         Destroy(gameObject);
+    //     }
+    // }
+
+    [Header("테스트용")]
+    [SerializeField] private GameObject crackPrefab;
+
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Enemy"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            var enemy = other.GetComponent<Monster>();
-            if (enemy != null)
+            if (collision.gameObject.TryGetComponent(out Monster enemy))
             {
                 enemy.OnHit(damage);
             }
 
+            if (crackPrefab != null)
+            {
+                Instantiate(crackPrefab, transform.position, transform.rotation);
+            }
             Destroy(gameObject);
         }
     }
+    // ****************************************************************************************************
 }

@@ -170,6 +170,15 @@ public class Monster : MonoBehaviour, IChase
     public void OnHit(float damage)
     {
         _hp -= damage;
+
+        // ******************************************************************************************
+        // 테스트를 위해 임시로 수정했습니다. (충돌 시 작업하신걸로 덮어씌워주세요!)
+        
+        var health = GetComponent<HealthBar>();
+        health.SetHealth(_hp / maxHp);
+
+        // ******************************************************************************************
+
         if (_hp <= 0)
             action?.Invoke();
 

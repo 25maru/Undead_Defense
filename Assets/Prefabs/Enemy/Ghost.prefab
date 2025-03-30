@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 3353937407894594164}
   - component: {fileID: 1404528108365284000}
   - component: {fileID: 8246591281874647852}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +662,7 @@ MonoBehaviour:
   _speed: 5
   attackPower: 5
   attackRate: 2
-  attackRangeCollider: {fileID: 0}
+  attackRangeCollider: {fileID: 4366346156253207018}
   distance: 2
   inRange: 0
   chaseRate: 5
