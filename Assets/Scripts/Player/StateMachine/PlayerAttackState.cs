@@ -14,6 +14,7 @@ public class PlayerAttackState : PlayerBaseState
     public override void Exit()
     {
         base.Exit();
+        StopAnimation(player.AnimationData.AttackParameterHash);
     }
     public override void Update()
     {
@@ -22,6 +23,15 @@ public class PlayerAttackState : PlayerBaseState
         {
             playerStateMachine.ChangeState(playerStateMachine.IdleState);
         }
+        if (Vector3.Angle(player.model.transform.forward, player.target.position - player.transform.position) <= 10f)
+        {
+            StartAnimation(player.AnimationData.AttackParameterHash);
+        }
+        else
+        {
+            StopAnimation(player.AnimationData.AttackParameterHash);
+        }
+
     }
     public override void PhysicsUpdate()
     {
