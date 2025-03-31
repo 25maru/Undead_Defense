@@ -10318,6 +10318,7 @@ GameObject:
   - component: {fileID: 1404528108365284000}
   - component: {fileID: 8246591281874647852}
   - component: {fileID: -7000011465290545699}
+  - component: {fileID: 6219829322949260567}
   - component: {fileID: -7421450278351661270}
   m_Layer: 6
   m_Name: Ghost_PJW-Normal
@@ -10430,9 +10431,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterName: Ghost
+  health: {fileID: 0}
   isDead: 0
-  maxHp: 100
-  _hp: 0
   _speed: 5
   attackPower: 5
   attackRate: 2
@@ -10466,6 +10466,20 @@ MonoBehaviour:
   transitionEase: 6
   transitionDelay: 0.5
   transitionDuration: 1
+--- !u!114 &6219829322949260567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346920272280219943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec461c678db5aad4998597e04edbe375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHp: 100
+  _hp: 0
 --- !u!114 &-7421450278351661270
 MonoBehaviour:
   m_ObjectHideFlags: 0
