@@ -1,9 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// MonoBehaviour 대신 MonoSingleton<T>을 상속받는
+/// MonoBehaviour 대신 상속받아 간편하게 싱글톤을 구현할 수 있습니다.
 /// </summary>
-/// <typeparam name="T"></typeparam>
 public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>
 {
     private static T instance;

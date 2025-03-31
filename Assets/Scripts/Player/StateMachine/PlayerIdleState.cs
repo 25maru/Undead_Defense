@@ -23,7 +23,7 @@ public class PlayerIdleState : PlayerBaseState
         base.Update();
         if(player.target != null)
         {
-            playerStateMachine.ChangeState(playerStateMachine.AttackState);
+            // playerStateMachine.ChangeState(playerStateMachine.AttackState);
         }
     }
 }
