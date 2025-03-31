@@ -35,6 +35,7 @@ public class SoldierAttackState : SoldierBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        Move();
         Rotate();
     }
     void Rotate()
@@ -46,5 +47,11 @@ public class SoldierAttackState : SoldierBaseState
             Quaternion targetRotation = Quaternion.LookRotation(direction);
             soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation, targetRotation, soldier.rotateSpeed);
         }
+    }
+    protected override void Move()
+    {
+        base.Move();
+        soldier.agent.SetDestination(Vector3.zero);
+        moveDirection = Vector3.zero;
     }
 }

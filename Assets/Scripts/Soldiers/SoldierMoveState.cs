@@ -62,4 +62,5 @@ public class SoldierMoveState : SoldierBaseState
             soldier.ClearOrderTarget();
         }
     }
+
 }
