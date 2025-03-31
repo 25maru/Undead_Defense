@@ -546,6 +546,7 @@ GameObject:
   - component: {fileID: 3353937407894594164}
   - component: {fileID: 1404528108365284000}
   - component: {fileID: 8246591281874647852}
+  - component: {fileID: -8336506830590637269}
   m_Layer: 6
   m_Name: Ghost
   m_TagString: Untagged
@@ -656,9 +657,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterName: Ghost
+  health: {fileID: 0}
   isDead: 0
-  maxHp: 100
-  _hp: 0
   _speed: 5
   attackPower: 5
   attackRate: 2
@@ -673,6 +673,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   materials: []
+--- !u!114 &-8336506830590637269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346920272280219943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec461c678db5aad4998597e04edbe375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHp: 100
+  _hp: 0
 --- !u!1 &6353682767374918699
 GameObject:
   m_ObjectHideFlags: 0

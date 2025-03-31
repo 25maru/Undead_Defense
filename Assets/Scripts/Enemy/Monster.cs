@@ -14,11 +14,9 @@ public class Monster : MonoBehaviour, IChase
 {
     [Header("Monster Status")]
     public string monsterName;
+    public Health health;
     [SerializeField] protected bool isDead = false;
-    [SerializeField] protected float maxHp = 100;
-    [SerializeField] private float _hp;
     [SerializeField] protected float _speed;
-    public float hp { get => _hp; private set => _hp = value; }
     public float speed { get => _speed; private set => _speed = value; }
 
     [Header("Monster Attack")]
@@ -36,7 +34,7 @@ public class Monster : MonoBehaviour, IChase
     private bool isChase;
     
     [Header("HP Bar")]
-    [SerializeField] protected RectTransform hpBar;
+    [SerializeField] protected HealthBar hpBar;
     
     [Header("Monster AI")]
     [SerializeField] private Transform target;
@@ -64,9 +62,11 @@ public class Monster : MonoBehaviour, IChase
     
     private void Awake()
     {
+        health = GetComponent<Health>();
         anim = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         attackRangeCollider = GetComponentInChildren<SphereCollider>();
+        hpBar = GetComponent<HealthBar>();
         target = TestHomeTarget.Instance.transform;  // 나중에 메인 기지 세팅
         action += OnDead;
         
@@ -77,7 +77,6 @@ public class Monster : MonoBehaviour, IChase
     {
         isDead = false;
         isChase = true;
-        _hp = maxHp;
         attackRangeCollider.radius = distance;
         navMeshAgent.speed = _speed;
         navMeshAgent.SetDestination(target.position);
@@ -98,6 +97,12 @@ public class Monster : MonoBehaviour, IChase
 
     protected virtual void Attack()
     {
+        if (target == null)
+        {
+            inRange = false;
+            target = TestHomeTarget.Instance.transform;
+        }
+        
         // 공격시 목표물로 방향회전
         Vector3 direction = target.position - transform.position; direction.y = 0f;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
@@ -107,10 +112,31 @@ public class Monster : MonoBehaviour, IChase
         {
             Debug.Log("Attack");
             lastAttackTime = Time.time;
-            // Player.damage()
+            StartCoroutine(DelayAttack(0.6f));
+            
             ChangeState(State.Attack);
         }
     }
+
+    IEnumerator DelayAttack(float time)
+    {
+        yield return new WaitForSeconds(time);
+
+        if (target.gameObject.layer == LayerMask.NameToLayer("Player") ||
+            target.gameObject.layer == LayerMask.NameToLayer("Soldier"))
+        {
+           var targetHealth = target.GetComponent<Health>();
+           targetHealth?.OnDamaged(attackPower);
+        }
+
+        if (target.gameObject.layer == LayerMask.NameToLayer("Building"))
+        {
+            var targetBuilding = target.GetComponent<BuildingLogicController>();
+            Debug.Log("건물 공격 판정");
+            targetBuilding.TakeDamage(attackPower);
+        }
+    }
+    
 
     protected virtual void Move()
     {
@@ -169,17 +195,10 @@ public class Monster : MonoBehaviour, IChase
     //피격시 호출되는 메서드
     public void OnHit(float damage)
     {
-        _hp -= damage;
-
-        // ******************************************************************************************
-        // 테스트를 위해 임시로 수정했습니다. (충돌 시 작업하신걸로 덮어씌워주세요!)
+        health.OnDamaged(damage);
+        hpBar?.SetHealth(health.hp / health.maxHp);
         
-        var health = GetComponent<HealthBar>();
-        health.SetHealth(_hp / maxHp);
-
-        // ******************************************************************************************
-
-        if (_hp <= 0)
+        if (health.hp <= 0)
             action?.Invoke();
 
         StartCoroutine("DamageFlash");
@@ -219,11 +238,6 @@ public class Monster : MonoBehaviour, IChase
     protected void ChangeState(State newState)
     {
         state = newState;
-    }
-    
-    protected virtual float GetHpPercent()
-    {
-        return hp / maxHp;
     }
 
     private void SearchMaterial()
@@ -266,6 +280,7 @@ public class Monster : MonoBehaviour, IChase
         if ((targetLayer & (1 << other.gameObject.layer)) != 0)
         {
             inRange = true;
+            target = other.transform;
         }
     }
 
