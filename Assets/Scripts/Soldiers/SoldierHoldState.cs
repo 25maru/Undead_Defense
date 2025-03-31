@@ -25,4 +25,17 @@ public class SoldierHoldState : SoldierBaseState
             soldierStateMachine.ChangeState(soldierStateMachine.AttackState);
         }
     }
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        Move();
+    }
+    protected override void Move()
+    {
+        base.Move();
+        if (!soldier.isGround)
+        {
+            soldier.Controller.Move(Vector3.down * soldier.downSpeed * Time.deltaTime);
+        }
+    }
 }

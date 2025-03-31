@@ -10,6 +10,7 @@ public class SoldierAttackState : SoldierBaseState
     public override void Enter()
     {
         base.Enter();
+        soldier.agent.ResetPath();
     }
     public override void Exit()
     {
@@ -35,7 +36,6 @@ public class SoldierAttackState : SoldierBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        Move();
         Rotate();
     }
     void Rotate()
@@ -51,7 +51,9 @@ public class SoldierAttackState : SoldierBaseState
     protected override void Move()
     {
         base.Move();
-        soldier.agent.SetDestination(Vector3.zero);
-        moveDirection = Vector3.zero;
+        if (!soldier.isGround)
+        {
+            soldier.Controller.Move(Vector3.down * soldier.downSpeed * Time.deltaTime);
+        }
     }
 }

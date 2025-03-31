@@ -21,14 +21,16 @@ public class SoldierFollowState : SoldierBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        Rotate();
+        
         Move();
+        Rotate();
     }
     protected override void Move()
     {
         soldier.agent.SetDestination(soldier.orderTarget.position);
-        moveDirection = soldier.agent.desiredVelocity;
-        base.Move();
+        moveDirection = soldier.agent.desiredVelocity.normalized;
+        soldier.agent.nextPosition = soldier.transform.position;
+        soldier.Controller.Move(((moveDirection * soldier.moveSpeed) + (Vector3.down * soldier.downSpeed)) * Time.deltaTime);
     }
     void Rotate()
     {

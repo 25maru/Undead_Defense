@@ -42,8 +42,9 @@ public class SoldierMoveState : SoldierBaseState
     protected override void Move()
     {
         soldier.agent.SetDestination(soldier.orderTarget != null ? soldier.orderTarget.position : soldier.target.position);
-        moveDirection = soldier.agent.desiredVelocity;
-        base.Move();
+        moveDirection = soldier.agent.desiredVelocity.normalized;
+        soldier.agent.nextPosition = soldier.transform.position;
+        soldier.Controller.Move(((moveDirection * soldier.moveSpeed) + (Vector3.down * soldier.downSpeed)) * Time.deltaTime);
     }
     void Rotate()
     {
@@ -57,9 +58,9 @@ public class SoldierMoveState : SoldierBaseState
     }
     void CheckOrderPosition()
     {
-        if(soldier.orderTarget != null && Vector3.Distance(soldier.orderTarget.position,soldier.transform.position) <= 0.1f)
+        if(soldier.orderTarget != null && Vector3.Distance(new Vector3(soldier.orderTarget.position.x,0, soldier.orderTarget.position.z) ,new Vector3(soldier.transform.position.x,0, soldier.transform.position.z)) <= 0.8f)
         {
-            soldier.ClearOrderTarget();
+            soldier.orderTarget = null;
         }
     }
 
