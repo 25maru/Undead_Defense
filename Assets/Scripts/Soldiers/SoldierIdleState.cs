@@ -12,6 +12,7 @@ public class SoldierIdleState : SoldierBaseState
     {
         base.Enter();
         StartAnimation(soldier.AnimationData.IdleParameterHash);
+        soldier.agent.ResetPath();
     }
     public override void Exit()
     {
@@ -28,13 +29,17 @@ public class SoldierIdleState : SoldierBaseState
     }
     public override void PhysicsUpdate()
     {
+        base.PhysicsUpdate();
         Move();
     }
+
     protected override void Move()
     {
         base.Move();
-        soldier.agent.SetDestination(Vector3.zero);
-        moveDirection = Vector3.zero;
+        if (!soldier.isGround)
+        {
+            soldier.Controller.Move(Vector3.down * soldier.downSpeed * Time.deltaTime);
+        }
+        
     }
-
 }

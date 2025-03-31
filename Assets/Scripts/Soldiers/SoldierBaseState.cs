@@ -8,7 +8,6 @@ public class SoldierBaseState : IState
     protected SoldierStateMachine soldierStateMachine;
     protected Transform model;
     protected Vector3 moveDirection;
-
     public SoldierBaseState(SoldierStateMachine soldierStateMachine)
     {
         this.soldierStateMachine = soldierStateMachine;
@@ -49,7 +48,6 @@ public class SoldierBaseState : IState
     }
     protected virtual void Move()
     {
-        //겹침 밀어내기 로직 추가필요
-        soldier.Controller.Move(moveDirection * Time.deltaTime);
+
     }
 }

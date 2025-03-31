@@ -57,6 +57,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
+    - _Color: {r: 0, g: 1.5, b: 6, a: 1}
     - _FresnelColor: {r: 0, g: 2.4, b: 6, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &530707440675619392
