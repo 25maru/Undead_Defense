@@ -22,7 +22,7 @@ public class SoldierMoveState : SoldierBaseState
     {
         base.Update();
         CheckOrderPosition();
-        if(soldier.target == null)
+        if(soldier.target == null && soldier.orderTarget == null)
         {
             soldierStateMachine.ChangeState(soldierStateMachine.IdleState);
             return;
@@ -33,25 +33,35 @@ public class SoldierMoveState : SoldierBaseState
             return;
         }
     }
-    public override void HandleInput()
-    {
-        base.HandleInput();
-        soldier.agent.SetDestination(soldier.orderTarget != null ? soldier.orderTarget.position : soldier.target.position);
-    }
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
         Move();
+        Rotate();
     }
-    void Move()
+    protected override void Move()
     {
-        
+        soldier.agent.SetDestination(soldier.orderTarget != null ? soldier.orderTarget.position : soldier.target.position);
+        moveDirection = soldier.agent.desiredVelocity.normalized;
+        soldier.agent.nextPosition = soldier.transform.position;
+        soldier.Controller.Move(((moveDirection * soldier.moveSpeed) + (Vector3.down * soldier.downSpeed)) * Time.deltaTime);
+    }
+    void Rotate()
+    {
+        Vector3 direction = moveDirection;
+        direction.y = 0f;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation, targetRotation, soldier.rotateSpeed);
+        }
     }
     void CheckOrderPosition()
     {
-        if(soldier.orderTarget != null && Vector3.Distance(soldier.orderTarget.position,soldier.transform.position) <= 0.1f)
+        if(soldier.orderTarget != null && Vector3.Distance(new Vector3(soldier.orderTarget.position.x,0, soldier.orderTarget.position.z) ,new Vector3(soldier.transform.position.x,0, soldier.transform.position.z)) <= 0.8f)
         {
-            soldier.ClearOrderTarget();
+            soldier.orderTarget = null;
         }
     }
+
 }

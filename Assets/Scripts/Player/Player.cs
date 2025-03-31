@@ -11,9 +11,15 @@ public class Player : MonoBehaviour
     public Transform model;
     public List<Transform> targets;
     public Transform target;
+    [SerializeField] PlayerOrderCollider playerOrderCollider;
 
     public float rotateSpeed;
     [SerializeField] float moveSpeed;
+    [SerializeField] float downSpeed;
+    [SerializeField] LayerMask groundMask;
+    public float detectingDistance;
+
+    bool isGround;
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
 
@@ -28,6 +34,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        IsGround();
         SetTarget();
         playerStateMachine.HandleInput();
         playerStateMachine.Update();
@@ -45,25 +52,40 @@ public class Player : MonoBehaviour
             curMoveInput = context.ReadValue<Vector2>();
             playerStateMachine.ChangeState(playerStateMachine.MoveState);
         }
-        if (context.phase == InputActionPhase.Canceled)
+        else if (context.phase == InputActionPhase.Canceled)
         {
             curMoveInput = Vector2.zero;
             playerStateMachine.ChangeState(playerStateMachine.IdleState);
         }
     }
+    public void OnOrder(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerOrderCollider.StartOrder();
+        }
+        else if (context.canceled)
+        {
+            playerOrderCollider.EndOrder();
+        }
+    }
+    public void OnHold(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            playerOrderCollider.Hold();
+        }
+    }
     void move()
     {
         Vector3 movedirection = new Vector3(curMoveInput.x, 0 ,curMoveInput.y);
+        if (!isGround)
+        {
+            movedirection += Vector3.down * downSpeed;
+        }
         Controller.Move(movedirection * moveSpeed * Time.deltaTime);
     }
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     targets.Add(other.transform);
-    // }
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     targets.Remove(other.transform);
-    // }
+
     void SetTarget()
     {
         if(targets.Count == 0)
@@ -77,6 +99,17 @@ public class Player : MonoBehaviour
                 target = targets[i];
             if((target.position -transform.position).sqrMagnitude > (targets[i].position - transform.position).sqrMagnitude)
                 target = targets[i];
+        }
+    }
+    void IsGround()
+    {
+        if (Physics.Raycast(transform.position + (Vector3.up * 0.05f), Vector3.down, 0.1f, groundMask))
+        {
+            isGround = true;
+        }
+        else
+        {
+            isGround = false;
         }
     }
 }

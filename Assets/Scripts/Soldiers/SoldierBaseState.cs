@@ -7,8 +7,7 @@ public class SoldierBaseState : IState
     protected Soldier soldier;
     protected SoldierStateMachine soldierStateMachine;
     protected Transform model;
-
-
+    protected Vector3 moveDirection;
     public SoldierBaseState(SoldierStateMachine soldierStateMachine)
     {
         this.soldierStateMachine = soldierStateMachine;
@@ -33,7 +32,6 @@ public class SoldierBaseState : IState
 
     public virtual void PhysicsUpdate()
     {
-
     }
 
     public virtual void Update()
@@ -47,5 +45,9 @@ public class SoldierBaseState : IState
     protected void StopAnimation(int animationHash)
     {
         soldier.animator.SetBool(animationHash, false);
+    }
+    protected virtual void Move()
+    {
+
     }
 }
