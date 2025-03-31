@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public float rotateSpeed;
     [SerializeField] float moveSpeed;
+    public float detectingDistance;
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
 
@@ -40,12 +41,12 @@ public class Player : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.phase == InputActionPhase.Performed)
         {
             curMoveInput = context.ReadValue<Vector2>();
             playerStateMachine.ChangeState(playerStateMachine.MoveState);
         }
-        else if (context.canceled)
+        if (context.phase == InputActionPhase.Canceled)
         {
             curMoveInput = Vector2.zero;
             playerStateMachine.ChangeState(playerStateMachine.IdleState);
@@ -56,14 +57,14 @@ public class Player : MonoBehaviour
         Vector3 movedirection = new Vector3(curMoveInput.x, 0 ,curMoveInput.y);
         Controller.Move(movedirection * moveSpeed * Time.deltaTime);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        targets.Add(other.transform);
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        targets.Remove(other.transform);
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     targets.Add(other.transform);
+    // }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     targets.Remove(other.transform);
+    // }
     void SetTarget()
     {
         if(targets.Count == 0)

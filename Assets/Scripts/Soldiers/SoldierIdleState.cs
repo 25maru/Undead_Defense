@@ -26,4 +26,15 @@ public class SoldierIdleState : SoldierBaseState
             soldierStateMachine.ChangeState(soldierStateMachine.MoveState);
         }
     }
+    public override void PhysicsUpdate()
+    {
+        Move();
+    }
+    protected override void Move()
+    {
+        base.Move();
+        soldier.agent.SetDestination(Vector3.zero);
+        moveDirection = Vector3.zero;
+    }
+
 }

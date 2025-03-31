@@ -26,6 +26,7 @@ public class PlayerAttackState : PlayerBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        
         Rotate();
     }
     void Rotate()

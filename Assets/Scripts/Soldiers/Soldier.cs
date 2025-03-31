@@ -13,8 +13,11 @@ public class Soldier : MonoBehaviour
     public List<Transform> targets;
     public Transform target;
     public Transform orderTarget;
-    public float attackDistance;
     public NavMeshAgent agent;
+
+    public float detectingDistance;
+    public float attackDistance;
+    
 
 
     [SerializeField] SphereCollider detectingCollider;
@@ -40,7 +43,7 @@ public class Soldier : MonoBehaviour
     private void Start()
     {
         soldierStateMachine.ChangeState(soldierStateMachine.IdleState);
-        //detectingCollider.radius = detectingDistance;                     //유닛 데이터에서 각 유닛별 감지거리만큼 콜라이더 변형
+        detectingCollider.radius = detectingDistance;                     //유닛 데이터에서 각 유닛별 감지거리만큼 콜라이더 변형
     }
     private void Update()
     {
@@ -76,10 +79,11 @@ public class Soldier : MonoBehaviour
                 target = targets[i];
         }
     }
-    public void SetOrderTarget(Transform transform)
+    public void GetOrder(Transform transform)
     {
         orderTarget = transform;
         underOrderCircle.SetActive(true);
+        soldierStateMachine.ChangeState(soldierStateMachine.FollowState);
     }
     public void ClearOrderTarget()
     {

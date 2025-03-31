@@ -17,5 +17,12 @@ public class SoldierHoldState : SoldierBaseState
         base.Exit();
         StopAnimation(soldier.AnimationData.IdleParameterHash);
     }
-
+    public override void Update()
+    {
+        base.Update();
+        if(soldier.target != null && Vector3.Distance(soldier.target.position, soldier.transform.position) <= soldier.attackDistance)
+        {
+            soldierStateMachine.ChangeState(soldierStateMachine.AttackState);
+        }
+    }
 }
