@@ -11,11 +11,19 @@ public class ConstructionController : MonoBehaviour
 
     [Header("테스트용 데이터")]
     [SerializeField] private bool testMode = true;
+    
+    [Header("Init")]
+    [SerializeField] private bool MainBuilding = false;
 
     private Building building;
 
     private void Start()
     {
+        if (MainBuilding)
+        {
+            StartConstruction(new MainBuilding());
+        }
+        
         if (testMode)
         {
             Debug.Log("[건설 테스트] 테스트 모드로 초기화");

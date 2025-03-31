@@ -23,11 +23,5 @@ public class ProductionBuilding : Building
             Debug.Log("💰 골드 획득 +10");
         }
     }
-    
-    public override void OnDestroyed(BuildingLogicController controller)
-    {
-        base.OnDestroyed(controller);
-        Debug.Log("💥 타워 파괴됨!");
-    }
 }
 
