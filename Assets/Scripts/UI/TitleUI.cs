@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TitleUI : BaseUI
 {
-    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private GameObject titleText;
+    [SerializeField] private GameObject descPanel;
 
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
@@ -14,10 +14,6 @@ public class TitleUI : BaseUI
     [SerializeField] private RectTransform leftDoor;
     [SerializeField] private RectTransform rightDoor;
     [SerializeField] private RectTransform ghost;
-
-    [SerializeField] private RectTransform key;
-
-    private RectTransform lockObj;
 
     WaitForSeconds wait = new WaitForSeconds(1f);
 
@@ -40,15 +36,17 @@ public class TitleUI : BaseUI
 
     private IEnumerator GateOpen()
     {
-        leftDoor.DOAnchorPosX(-750, 2f);
-        rightDoor.DOAnchorPosX(750, 2f);
+        descPanel.SetActive(false);
+
+        leftDoor.DOAnchorPosX(-750, 1.5f);
+        rightDoor.DOAnchorPosX(750, 1.5f);
 
         leftDoor.DORotate(new Vector3(0, -65, 0), 1f, RotateMode.WorldAxisAdd);
         rightDoor.DORotate(new Vector3(0, 65, 0), 1f, RotateMode.WorldAxisAdd);
 
         yield return wait;
 
-        titleText.gameObject.SetActive(true);
+        titleText.SetActive(true);
 
         yield return wait;
 
@@ -69,7 +67,6 @@ public class TitleUI : BaseUI
         yield return wait;
 
         StartCoroutine("GateOpen");
-        //Destroy(key.gameObject);
     }
 
     public void OnClickPlayButton()

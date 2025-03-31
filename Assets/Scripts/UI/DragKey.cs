@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Drag : MonoBehaviour, IDragHandler, IDropHandler
+public class DragKey : MonoBehaviour, IDragHandler, IDropHandler
 {
     [SerializeField] private RectTransform keyRectTrans;
     [SerializeField] private RectTransform lockRectTrans;
