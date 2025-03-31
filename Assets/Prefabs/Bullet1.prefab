@@ -151,6 +151,6 @@ MonoBehaviour:
   speed: 30
   rotateSpeed: 5
   lifeTime: 5
-  damage: 50
+  damage: 75
   crackPrefab: {fileID: 7150238723940800004, guid: f77ac68b1bb3e4b46beb3f5b6c048640,
     type: 3}

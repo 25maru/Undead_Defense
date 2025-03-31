@@ -10482,8 +10482,8 @@ MonoBehaviour:
   delayBar: {fileID: 1396960279309303387}
   healthText: {fileID: 0}
   animEase: 6
-  delayTime: 1
-  animDuration: 0.5
+  delayTime: 0.5
+  animDuration: 0.25
 --- !u!1 &6353682767374918699
 GameObject:
   m_ObjectHideFlags: 0
