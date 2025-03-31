@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public enum UIState
 {
@@ -14,11 +16,17 @@ public enum UIState
 
 public class UIManager : MonoSingleton<UIManager>
 {
-    TitleUI titleUI;
-    StageUI stageUI;
-    GameUI gameUI;
-    GameClearUI gameClearUI;
-    GameOverUI gameOverUI;
+    [SerializeField] private TitleUI titleUi;
+    [SerializeField] private StageUI stageUi;
+    [SerializeField] private GameUI gameUi;
+    [SerializeField] private GameClearUI gameClearUi;
+    [SerializeField] private GameOverUI gameOverUi;
+
+    public TitleUI titleUI { get; private set; }
+    public StageUI stageUI { get; private set; }
+    public GameUI gameUI{ get; private set; }
+    public GameClearUI gameClearUI { get; private set; }
+    public GameOverUI gameOverUI { get; private set; }
 
     UIState currentState;
 
@@ -27,16 +35,17 @@ public class UIManager : MonoSingleton<UIManager>
     {
         base.Awake();
 
-        titleUI = GetComponentInChildren<TitleUI>(true);
-        titleUI.Init(this);
-        stageUI = GetComponentInChildren<StageUI>(true);
-        stageUI.Init(this);
-        gameUI = GetComponentInChildren<GameUI>(true);
-        gameUI.Init(this);
-        gameClearUI = GetComponentInChildren<GameClearUI>(true);
-        gameClearUI.Init(this);
-        gameOverUI = GetComponentInChildren<GameOverUI>(true);
-        gameOverUI.Init(this);
+        titleUI = titleUi;
+        stageUI = stageUi;
+        gameUI = gameUi;
+        gameClearUI = gameClearUi;
+        gameOverUI = gameOverUi;
+
+        titleUi.Init(this);
+        stageUi.Init(this);
+        gameUi.Init(this);
+        gameClearUi.Init(this);
+        gameOverUi.Init(this);
 
         ChangeState(UIState.TITLE);
     }
@@ -63,10 +72,10 @@ public class UIManager : MonoSingleton<UIManager>
     public void ChangeState(UIState state)
     {
         currentState = state;
-        titleUI.SetUIActive(currentState);
-        stageUI.SetUIActive(currentState);
-        gameUI.SetUIActive(currentState);
-        gameClearUI.SetUIActive(currentState);
-        gameOverUI.SetUIActive(currentState);
+        titleUi.SetUIActive(currentState);
+        stageUi.SetUIActive(currentState);
+        gameUi.SetUIActive(currentState);
+        gameClearUi.SetUIActive(currentState);
+        gameOverUi.SetUIActive(currentState);
     }
 }

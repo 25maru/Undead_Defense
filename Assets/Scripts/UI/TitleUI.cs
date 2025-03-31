@@ -1,16 +1,75 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using DG.Tweening;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class TitleUI : BaseUI
 {
+    [SerializeField] private TextMeshProUGUI titleText;
+
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
+
+    [SerializeField] private RectTransform leftDoor;
+    [SerializeField] private RectTransform rightDoor;
+    [SerializeField] private RectTransform ghost;
+
+    [SerializeField] private RectTransform key;
+
+    private RectTransform lockObj;
+
+    WaitForSeconds wait = new WaitForSeconds(1f);
+
 
     public override void Init(UIManager uiManager)
     {
         base.Init(uiManager);
         playButton.onClick.AddListener(OnClickPlayButton);
         quitButton.onClick.AddListener(OnClickQuitButton);
+
+        playButton.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(false);
+    }
+
+
+    private void Start()
+    {
+        MoveGhost();
+    }
+
+    private IEnumerator GateOpen()
+    {
+        leftDoor.DOAnchorPosX(-750, 2f);
+        rightDoor.DOAnchorPosX(750, 2f);
+
+        leftDoor.DORotate(new Vector3(0, -65, 0), 1f, RotateMode.WorldAxisAdd);
+        rightDoor.DORotate(new Vector3(0, 65, 0), 1f, RotateMode.WorldAxisAdd);
+
+        yield return wait;
+
+        titleText.gameObject.SetActive(true);
+
+        yield return wait;
+
+        playButton.gameObject.SetActive(true);
+        quitButton.gameObject.SetActive(true);
+    }
+
+    void MoveGhost()
+    {
+        ghost.DOLocalMoveY(40, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+    }
+
+    public IEnumerator Unlock(RectTransform key)
+    {
+        key.DOAnchorPos(new Vector3(-30, -380, 0), 1f);
+        key.DORotate(new Vector3(180, -90, 115), 1f);
+
+        yield return wait;
+
+        StartCoroutine("GateOpen");
+        //Destroy(key.gameObject);
     }
 
     public void OnClickPlayButton()
