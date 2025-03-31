@@ -1639,6 +1639,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: ' Soldier'
       objectReference: {fileID: 0}
+    - target: {fileID: 6423717004229742221, guid: ccda1c5bdf721bb40a31971d24df8466,
+        type: 3}
+      propertyPath: attackDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423717004229742221, guid: ccda1c5bdf721bb40a31971d24df8466,
+        type: 3}
+      propertyPath: detectingDistance
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

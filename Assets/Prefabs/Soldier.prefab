@@ -283,8 +283,8 @@ MonoBehaviour:
   target: {fileID: 0}
   orderTarget: {fileID: 0}
   agent: {fileID: 4519679325935411313}
-  detectingDistance: 10
-  attackDistance: 5
+  detectingDistance: 20
+  attackDistance: 10
   isGround: 0
   groundMask:
     serializedVersion: 2
@@ -293,6 +293,7 @@ MonoBehaviour:
   underOrderCircle: {fileID: 5795846674666013423}
   rotateSpeed: 5
   moveSpeed: 5
+  downSpeed: 10
 --- !u!95 &5384989178071291271
 Animator:
   serializedVersion: 5
