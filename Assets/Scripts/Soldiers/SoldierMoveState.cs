@@ -36,6 +36,7 @@ public class SoldierMoveState : SoldierBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+        Move();
         Rotate();
     }
     protected override void Move()

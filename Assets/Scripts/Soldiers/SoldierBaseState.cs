@@ -33,7 +33,6 @@ public class SoldierBaseState : IState
 
     public virtual void PhysicsUpdate()
     {
-        Move();
     }
 
     public virtual void Update()

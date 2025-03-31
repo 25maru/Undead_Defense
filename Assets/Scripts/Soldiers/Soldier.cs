@@ -79,10 +79,11 @@ public class Soldier : MonoBehaviour
                 target = targets[i];
         }
     }
-    public void SetOrderTarget(Transform transform)
+    public void GetOrder(Transform transform)
     {
         orderTarget = transform;
         underOrderCircle.SetActive(true);
+        soldierStateMachine.ChangeState(soldierStateMachine.FollowState);
     }
     public void ClearOrderTarget()
     {

@@ -28,12 +28,8 @@ public class SoldierIdleState : SoldierBaseState
     }
     public override void PhysicsUpdate()
     {
-        base.PhysicsUpdate();
+        moveDirection = Vector3.zero;
+        Move();
     }
 
-    protected override void Move()
-    {
-        moveDirection = Vector3.zero;
-        base.Move();
-    }
 }

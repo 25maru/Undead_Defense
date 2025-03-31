@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public float rotateSpeed;
     [SerializeField] float moveSpeed;
+    public float detectingDistance;
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
 

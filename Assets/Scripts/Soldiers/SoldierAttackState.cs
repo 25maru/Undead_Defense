@@ -21,7 +21,15 @@ public class SoldierAttackState : SoldierBaseState
         base.Update();
         if (soldier.target == null || Vector3.Distance(soldier.target.position, soldier.transform.position) >= soldier.attackDistance)
         {
-
+            soldierStateMachine.ChangeState(soldierStateMachine.preState);
+        }
+        if(Vector3.Angle(soldier.transform.forward, soldier.target.position - soldier.transform.position) <= 10f)
+        {
+            StartAnimation(soldier.AnimationData.AttackParameterHash);
+        }
+        else
+        {
+            StopAnimation(soldier.AnimationData.AttackParameterHash);
         }
     }
     public override void PhysicsUpdate()

@@ -24,26 +24,15 @@ public class SoldierFollowState : SoldierBaseState
         Rotate();
         Move();
     }
-    void Move()
+    protected override void Move()
     {
-        //if((soldier.orderTarget.position-soldier.transform.position).sqrMagnitude <= (0.5f * 0.5f))
-        //{
-        //    StopAnimation(soldier.AnimationData.MoveParameterHash);
-        //    StartAnimation(soldier.AnimationData.IdleParameterHash);
-
-        //}
-        //else if((soldier.orderTarget.position - soldier.transform.position).sqrMagnitude >= 1f)
-        //{
-        //    StopAnimation(soldier.AnimationData.IdleParameterHash);
-        //    StartAnimation(soldier.AnimationData.MoveParameterHash);
-        //}
         soldier.agent.SetDestination(soldier.orderTarget.position);
-        Vector3 direction = soldier.agent.desiredVelocity;
-        soldier.Controller.Move(direction * Time.deltaTime);
+        moveDirection = soldier.agent.desiredVelocity;
+        base.Move();
     }
     void Rotate()
     {
-        Vector3 direction = soldier.orderTarget.position - soldier.transform.position;
+        Vector3 direction = moveDirection;
         direction.y = 0f;
         if (direction != Vector3.zero)
         {
