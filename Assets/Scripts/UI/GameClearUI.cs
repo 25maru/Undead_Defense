@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GameClearUI : BaseUI
@@ -13,6 +11,7 @@ public class GameClearUI : BaseUI
     }
     public void OnClickStageButton()
     {
+        UIManager.Instance.stageUI.UpdateUI();
         UIManager.Instance.ChangeState(UIState.STAGE);
     }
     protected override UIState GetUIState()

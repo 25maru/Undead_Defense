@@ -8,9 +8,9 @@ public class GameUI : BaseUI
     public override void Init(UIManager uiManager)
     {
         base.Init(uiManager);
+        ResourceManager.Instance.OnGoldChanged += ChangeGold;
     }
 
-    // action
     public void ChangeGold(int gold)
     {
         goldText.text = gold.ToString();
