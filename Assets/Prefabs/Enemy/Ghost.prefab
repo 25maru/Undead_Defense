@@ -547,6 +547,7 @@ GameObject:
   - component: {fileID: 1404528108365284000}
   - component: {fileID: 8246591281874647852}
   - component: {fileID: -8336506830590637269}
+  - component: {fileID: 2542829359817674277}
   m_Layer: 6
   m_Name: Ghost
   m_TagString: Untagged
@@ -672,6 +673,8 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 392
+  dropItem: {fileID: 3322109618237949676, guid: c05b02f21cc9c334393350a41fdebd4d,
+    type: 3}
   materials: []
 --- !u!114 &-8336506830590637269
 MonoBehaviour:
@@ -687,6 +690,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHp: 100
   _hp: 0
+--- !u!114 &2542829359817674277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6346920272280219943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b160cfeabef26534596c572255161c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - type: 1
+    clip: {fileID: 8300000, guid: 465b0ce033952b347b2aa0783919d0a4, type: 3}
+  - type: 2
+    clip: {fileID: 8300000, guid: 9d5a8de908688e64dbc44380ab7c1daf, type: 3}
+  volume: 0.5
 --- !u!1 &6353682767374918699
 GameObject:
   m_ObjectHideFlags: 0

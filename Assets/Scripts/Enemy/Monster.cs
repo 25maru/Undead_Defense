@@ -40,9 +40,13 @@ public class Monster : MonoBehaviour, IChase
     [SerializeField] private Transform target;
     [SerializeField] private LayerMask targetLayer;
     
+    [Header("Drop Item")]
+    [SerializeField] private GameObject dropItem;
+    
     protected NavMeshAgent navMeshAgent;
     protected Animator anim;
     protected State state = State.Idle;
+    private MonsterSound sound;
     
     private static readonly int moveState = Animator.StringToHash("Move");
     private static readonly int damagedState = Animator.StringToHash("Damaged");
@@ -51,7 +55,6 @@ public class Monster : MonoBehaviour, IChase
     
     public Material[] materials;
     
-    public Action action;
     protected enum State
     {
         Idle,
@@ -67,8 +70,9 @@ public class Monster : MonoBehaviour, IChase
         navMeshAgent = GetComponent<NavMeshAgent>();
         attackRangeCollider = GetComponentInChildren<SphereCollider>();
         hpBar = GetComponent<HealthBar>();
+        sound = GetComponent<MonsterSound>();
         target = TestHomeTarget.Instance.transform;  // 나중에 메인 기지 세팅
-        action += OnDead;
+        health.AddDieEvent(OnDead);
         
         SearchMaterial();
     }
@@ -110,9 +114,10 @@ public class Monster : MonoBehaviour, IChase
         
         if(Time.time - lastAttackTime > attackRate)
         {
-            Debug.Log("Attack");
             lastAttackTime = Time.time;
             StartCoroutine(DelayAttack(0.6f));
+            
+            sound.PlaySound(SoundType.Attack);
             
             ChangeState(State.Attack);
         }
@@ -132,7 +137,7 @@ public class Monster : MonoBehaviour, IChase
         if (target.gameObject.layer == LayerMask.NameToLayer("Building"))
         {
             var targetBuilding = target.GetComponent<BuildingLogicController>();
-            targetBuilding.TakeDamage(attackPower);
+            targetBuilding?.TakeDamage(attackPower);
         }
     }
     
@@ -194,8 +199,7 @@ public class Monster : MonoBehaviour, IChase
     //피격시 호출되는 메서드
     public void OnHit(float damage)
     {
-        if (health.OnDamaged(damage))
-            action?.Invoke();
+        health.OnDamaged(damage);
         
         hpBar?.SetHealth(health.hp / health.maxHp);
         StartCoroutine("DamageFlash");
@@ -222,6 +226,8 @@ public class Monster : MonoBehaviour, IChase
         isDead = true;
         ChangeState(State.Dead);
         
+        sound.PlaySound(SoundType.Death);
+        
         DropItem();
         
         Destroy(gameObject, 1f);
@@ -229,7 +235,7 @@ public class Monster : MonoBehaviour, IChase
 
     protected virtual void DropItem()
     {
-        
+        Instantiate(dropItem, transform.position, Quaternion.identity);
     }
     
     protected void ChangeState(State newState)
