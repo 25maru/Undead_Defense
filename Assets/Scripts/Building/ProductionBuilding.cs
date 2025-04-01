@@ -6,11 +6,15 @@ public class ProductionBuilding : Building
     private float tickTimer = 0f;
     private float goldInterval = 2f;
     private int goldAmount = 10;
+    
+    private ResourceManager resourceManager;
+    
 
     public ProductionBuilding() : base("Gold Mine", 80, 1.5f)
     {
         MaxHP = 80;
         CurrentHP = MaxHP;
+        Type = BuildingType.Production;
     }
 
     public override void Tick(BuildingLogicController controller)
@@ -18,16 +22,16 @@ public class ProductionBuilding : Building
         tickTimer += Time.deltaTime;
         if (tickTimer >= goldInterval)
         {
-            // GameManager.Instance.AddGold(goldAmount);
+            resourceManager.AddGold(goldAmount);
             tickTimer = 0f;
-            Debug.Log("💰 골드 획득 +10");
         }
     }
-    
-    public override void OnDestroyed(BuildingLogicController controller)
+
+    public override void Upgrade()
     {
-        base.OnDestroyed(controller);
-        Debug.Log("💥 타워 파괴됨!");
+        base.Upgrade();
+        goldAmount += 5;
+        goldInterval -= 0.1f;
     }
 }
 

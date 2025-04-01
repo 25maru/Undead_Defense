@@ -12,6 +12,7 @@ public class DefensiveBuilding : Building
     {
         MaxHP = 100;
         CurrentHP = MaxHP;
+        Type = BuildingType.Defense;
     }
 
     public override void Tick(BuildingLogicController controller)
