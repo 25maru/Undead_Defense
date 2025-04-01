@@ -4,12 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum BuildingType
-{
-    Defensive,
-    Production
-}
-
 public class BuildTriggerTest : MonoBehaviour
 {
     [Header("입력 설정")]
@@ -40,16 +34,21 @@ public class BuildTriggerTest : MonoBehaviour
 
         switch (type)
         {
-            case BuildingType.Defensive:
+            case BuildingType.Defense:
                 building = new DefensiveBuilding();
                 break;
 
             case BuildingType.Production:
                 building = new ProductionBuilding();
                 break;
+
+            case BuildingType.Spawner:
+                building = new SpawnerBuilding(new());
+                break;
         }
         
         if (testMode) building.BuildCost = requiredGold;
+        else requiredGold = building.BuildCost;
 
         goldUI.Setup(requiredGold);
     }
