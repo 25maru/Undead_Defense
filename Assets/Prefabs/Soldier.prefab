@@ -290,6 +290,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 127
+  health: {fileID: 0}
   detectingCollider: {fileID: 7286032617957660766}
   underOrderCircle: {fileID: 5795846674666013423}
   rotateSpeed: 5

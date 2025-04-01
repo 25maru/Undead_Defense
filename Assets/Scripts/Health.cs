@@ -22,8 +22,10 @@ public class Health : MonoBehaviour
         _hp = _maxHp;
     }
 
-    public void OnDamaged(float damage)
+    public bool OnDamaged(float damage)
     {
         hp -= damage;
+        
+        return hp <= 0;
     }
 }
