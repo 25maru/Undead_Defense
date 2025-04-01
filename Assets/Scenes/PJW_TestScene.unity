@@ -1715,6 +1715,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ghost_PJW-Shield (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6346920272280219943, guid: a592c0a0cbe9e164cb819ae6b21afb06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8177431360343464313, guid: a592c0a0cbe9e164cb819ae6b21afb06,
         type: 3}
       propertyPath: m_LocalPosition.x

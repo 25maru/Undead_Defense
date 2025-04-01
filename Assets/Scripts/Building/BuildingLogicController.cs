@@ -80,11 +80,11 @@ public class BuildingLogicController : MonoBehaviour
         {
             GameObject bar = Instantiate(healthBarPrefab, transform);
 
-            // 머리 위로 띄우기
-            bar.transform.localPosition = new Vector3(0, 20f, 0);
-
             // 부모 크기로 조절
-            bar.transform.localScale = transform.localScale * 0.2f;
+            bar.transform.localScale = Vector3.one * (0.02f / transform.localScale.x);
+
+            // 머리 위로 띄우기
+            bar.transform.localPosition = Vector3.up * (bar.transform.localScale.x * 250f);
 
             healthBarInstance = bar.GetComponent<HealthBar>();
 
