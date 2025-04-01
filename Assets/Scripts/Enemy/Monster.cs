@@ -72,7 +72,7 @@ public class Monster : MonoBehaviour, IChase
         hpBar = GetComponent<HealthBar>();
         sound = GetComponent<MonsterSound>();
         target = TestHomeTarget.Instance.transform;  // 나중에 메인 기지 세팅
-        health.OnDeath += OnDead;
+        health.AddDieEvent(OnDead);
         
         SearchMaterial();
     }

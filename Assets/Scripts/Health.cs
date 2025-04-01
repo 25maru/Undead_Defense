@@ -42,7 +42,7 @@ public class Health : MonoBehaviour
         hp -= damage;
         
         if(hp <= 0)
-            OnDeath?.Invoke();
+            onDeath?.Invoke();
         
         return hp <= 0;
     }
@@ -50,6 +50,8 @@ public class Health : MonoBehaviour
     public void Heal(float heal)
     {
         hp = Mathf.Min(hp + heal, _maxHp);
+    }
+
     public void ChangeHP(float value)
     {
         _hp = Mathf.Clamp(value, 0, maxHp);
@@ -65,5 +67,10 @@ public class Health : MonoBehaviour
     public void AddDieEvent(Action dieEvent)
     {
         onDeath += dieEvent;
+    }
+
+    public void MinusDieEvent(Action dieEvent)
+    {
+        onDeath -= dieEvent;
     }
 }
