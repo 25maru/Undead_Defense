@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 5384989178071291271}
   - component: {fileID: -821250733643388354}
   m_Layer: 7
-  m_Name: Soldier
+  m_Name: Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   orderTarget: {fileID: 0}
   agent: {fileID: 4519679325935411313}
   detectingDistance: 20
-  attackDistance: 3
+  attackDistance: 12
   isGround: 0
   groundMask:
     serializedVersion: 2
@@ -295,9 +295,9 @@ MonoBehaviour:
   detectingCollider: {fileID: 7286032617957660766}
   underOrderCircle: {fileID: 5795846674666013423}
   rotateSpeed: 5
-  moveSpeed: 6
+  moveSpeed: 4
   downSpeed: 10
-  damage: 10
+  damage: 20
 --- !u!95 &5384989178071291271
 Animator:
   serializedVersion: 5
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec461c678db5aad4998597e04edbe375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHp: 100
+  _maxHp: 30
   _hp: 0
 --- !u!1 &5795846674666013423
 GameObject:

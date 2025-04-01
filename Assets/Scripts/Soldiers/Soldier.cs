@@ -30,6 +30,7 @@ public class Soldier : MonoBehaviour
     public float rotateSpeed;
     public float moveSpeed;
     public float downSpeed;
+    public float damage;
 
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
