@@ -21,6 +21,8 @@ public class Soldier : MonoBehaviour
 
     public bool isGround;
     [SerializeField] LayerMask groundMask;
+    
+    public Health health;
 
     [SerializeField] SphereCollider detectingCollider;
     [SerializeField] GameObject underOrderCircle;
@@ -37,7 +39,7 @@ public class Soldier : MonoBehaviour
         AnimationData = new AnimationData();
         AnimationData.Initialize();
 
-        
+        health = GetComponent<Health>();
         agent.updatePosition = false;
         agent.updateRotation = false;
         Controller = GetComponent<CharacterController>();
@@ -47,11 +49,12 @@ public class Soldier : MonoBehaviour
     private void Start()
     {
         soldierStateMachine.ChangeState(soldierStateMachine.IdleState);
-        detectingCollider.radius = detectingDistance;                     //À¯´Ö µ¥ÀÌÅÍ¿¡¼­ °¢ À¯´Öº° °¨Áö°Å¸®¸¸Å­ Äİ¶óÀÌ´õ º¯Çü
+        detectingCollider.radius = detectingDistance;                     //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Öºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½Å­ ï¿½İ¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
     private void Update()
     {
         IsGround();
+        IsDead();
         SetTarget();
         soldierStateMachine.HandleInput();
         soldierStateMachine.Update();
@@ -106,6 +109,16 @@ public class Soldier : MonoBehaviour
             isGround= false;
         }
     }
+
+    private void IsDead()
+    {
+        // ì£½ìŒ ì‚¬ìš© ì˜ˆì‹œ
+        if (health.hp < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(transform.position + (Vector3.up * 0.05f), Vector3.down * 0.1f);

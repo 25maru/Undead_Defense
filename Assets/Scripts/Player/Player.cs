@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     public float detectingDistance;
 
     bool isGround;
+    public Health health;
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
 
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     {
         AnimationData = new AnimationData();
         AnimationData.Initialize();
+        health = GetComponent<Health>();
         Controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         playerStateMachine = new PlayerStateMachine(this);
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         IsGround();
+        IsDead();
         SetTarget();
         playerStateMachine.HandleInput();
         playerStateMachine.Update();
@@ -76,6 +79,7 @@ public class Player : MonoBehaviour
             playerOrderCollider.Hold();
         }
     }
+    
     void move()
     {
         Vector3 movedirection = new Vector3(curMoveInput.x, 0 ,curMoveInput.y);
@@ -110,6 +114,15 @@ public class Player : MonoBehaviour
         else
         {
             isGround = false;
+        }
+    }
+
+    void IsDead()
+    {
+        // 죽음 사용 예시
+        if (health.hp <= 0)
+        {
+            Destroy(this.gameObject);
         }
     }
 }
