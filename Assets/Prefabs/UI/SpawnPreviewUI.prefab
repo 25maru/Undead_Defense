@@ -121,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e073421d91c99e48b6feeaa46889d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 4578307136185223139}
+  sphereRenderer: {fileID: 4708449700217613862}
   iconImage: {fileID: 4927746187914287515}
   countText: {fileID: 5392012555454711593}
   canvasGroup: {fileID: 2491160466423242875}
@@ -401,7 +403,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6416135376036170953}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -413,7 +415,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b4fdbde6d7ce69d409009ee12a7ec93f, type: 2}
+  - {fileID: 2100000, guid: c7032a25f6ee60c4487f84e771f06b38, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -489,7 +491,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b4fdbde6d7ce69d409009ee12a7ec93f, type: 2}
+  - {fileID: 2100000, guid: c7032a25f6ee60c4487f84e771f06b38, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
