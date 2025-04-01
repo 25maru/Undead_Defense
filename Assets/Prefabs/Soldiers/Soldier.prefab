@@ -209,7 +209,7 @@ Transform:
   m_GameObject: {fileID: 5534853700877874063}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9, z: -6.96}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  model: {fileID: 0}
+  model: {fileID: 5303784440355067911}
   targets: []
   target: {fileID: 0}
   orderTarget: {fileID: 0}
@@ -622,6 +622,11 @@ PrefabInstance:
     - target: {fileID: 336687067533727651, guid: 083c59ea27959c04abcb7bff48874e65,
         type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205016274196649261, guid: 083c59ea27959c04abcb7bff48874e65,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4200445364965671292, guid: 083c59ea27959c04abcb7bff48874e65,

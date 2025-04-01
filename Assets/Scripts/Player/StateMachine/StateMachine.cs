@@ -14,9 +14,12 @@ public interface IState
 public abstract class StateMachine
 {
     protected IState currentState;
-
+    public bool isDeath = false;
     public virtual void ChangeState(IState state)
     {
+        if(isDeath)
+            return;
+
         currentState?.Exit();
         currentState = state;
         currentState?.Enter();
