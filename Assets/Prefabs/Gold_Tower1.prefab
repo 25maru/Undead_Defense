@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7834184736167360938}
   - component: {fileID: 1782469175424406231}
   - component: {fileID: 4665033017869070532}
+  - component: {fileID: 5819096662010636052}
   m_Layer: 0
   m_Name: Gold_Tower1
   m_TagString: Untagged
@@ -198,3 +199,25 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 3b21b4347c12d314bb3a9bb775e83588, type: 2}
+--- !u!114 &5819096662010636052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497782787365230226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b006c72428a54a6d99e62d883fb1f274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  upgradedPrefab: {fileID: 205035906638462050, guid: 29f5bd5bdebd641d6854252bc199b58f,
+    type: 3}
+  constructionEffectPrefab: {fileID: 5475108461781026497, guid: 4276f6fbb8a284f31a30784b5b70e124,
+    type: 3}
+  soldierPrefabs: []
+  rangeRenderer: {fileID: 0}
+  circleSegments: 60
+  healthBarPrefab: {fileID: 4200445364965671292, guid: 083c59ea27959c04abcb7bff48874e65,
+    type: 3}

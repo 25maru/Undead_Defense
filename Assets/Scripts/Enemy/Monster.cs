@@ -132,7 +132,6 @@ public class Monster : MonoBehaviour, IChase
         if (target.gameObject.layer == LayerMask.NameToLayer("Building"))
         {
             var targetBuilding = target.GetComponent<BuildingLogicController>();
-            Debug.Log("건물 공격 판정");
             targetBuilding.TakeDamage(attackPower);
         }
     }
@@ -195,12 +194,10 @@ public class Monster : MonoBehaviour, IChase
     //피격시 호출되는 메서드
     public void OnHit(float damage)
     {
-        health.OnDamaged(damage);
-        hpBar?.SetHealth(health.hp / health.maxHp);
-        
-        if (health.hp <= 0)
+        if (health.OnDamaged(damage))
             action?.Invoke();
-
+        
+        hpBar?.SetHealth(health.hp / health.maxHp);
         StartCoroutine("DamageFlash");
     }
     

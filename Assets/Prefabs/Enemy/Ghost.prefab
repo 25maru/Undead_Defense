@@ -661,7 +661,7 @@ MonoBehaviour:
   isDead: 0
   _speed: 5
   attackPower: 5
-  attackRate: 2
+  attackRate: 1.6
   attackRangeCollider: {fileID: 4366346156253207018}
   distance: 2
   inRange: 0
@@ -671,7 +671,7 @@ MonoBehaviour:
   target: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 392
   materials: []
 --- !u!114 &-8336506830590637269
 MonoBehaviour:

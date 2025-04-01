@@ -12,6 +12,8 @@ public abstract class Building
     public int MaxHP = 100;
     public int CurrentHP;
     public bool IsCritical = false;
+    
+    public BuildingType Type { get; protected set; }
 
     public Building(string name, int cost, float buildTime = 2f)
     {
