@@ -27,6 +27,12 @@ public class BuildingLogicController : MonoBehaviour
     [Header("시각화")]
     [SerializeField] private LineRenderer rangeRenderer;
     [SerializeField] private int circleSegments = 60;
+    
+    [Header("체력바")]
+    [SerializeField] private GameObject healthBarPrefab;
+    private HealthBar healthBarInstance;
+
+
 
     private void DrawRangeCircle(float radius)
     {
@@ -68,6 +74,25 @@ public class BuildingLogicController : MonoBehaviour
         {
             DrawRangeCircle(def.Range);
         }
+        
+        // 체력바 프리팹 생성 및 세팅
+        if (healthBarPrefab != null)
+        {
+            GameObject bar = Instantiate(healthBarPrefab, transform);
+
+            // 머리 위로 띄우기 (y=5f는 예시, 건물 크기에 맞게 조정)
+            bar.transform.localPosition = new Vector3(0, 20f, 0);
+
+            healthBarInstance = bar.GetComponent<HealthBar>();
+
+            if (healthBarInstance != null)
+            {
+                float hp = (float)building.CurrentHP / building.MaxHP;
+                healthBarInstance.SetHealth(hp);
+            }
+        }
+
+
         
         isBuilt = true;
     }
@@ -123,18 +148,13 @@ public class BuildingLogicController : MonoBehaviour
     public void TakeDamage(int amount)
     {
         building?.TakeDamage(amount, this);
-    }
 
-    public GameObject GetBulletPrefab() => bulletPrefab;
-    
-    private void OnDrawGizmos()
-    {
-        // 방어 건물인지 확인
-        if (building is DefensiveBuilding def)
+        if (healthBarInstance != null)
         {
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(transform.position, def.Range);
+            float hp = (float)building.CurrentHP / building.MaxHP;
+            healthBarInstance.SetHealth(hp);
         }
     }
-
+    
+    public GameObject GetBulletPrefab() => bulletPrefab;
 }

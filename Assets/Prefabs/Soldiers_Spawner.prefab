@@ -102,3 +102,7 @@ MonoBehaviour:
     type: 3}
   soldierPrefabs:
   - {fileID: 5534853700877874063, guid: ccda1c5bdf721bb40a31971d24df8466, type: 3}
+  rangeRenderer: {fileID: 0}
+  circleSegments: 60
+  healthBarPrefab: {fileID: 4200445364965671292, guid: 083c59ea27959c04abcb7bff48874e65,
+    type: 3}
