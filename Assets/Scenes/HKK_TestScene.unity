@@ -155,12 +155,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e48d9dbf1814cb089de39178a522211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  completedBuildingPrefab: {fileID: 2759230305370030882, guid: d19d888cf4feb4abeb950e49b7c0e941,
+  completedBuildingPrefab: {fileID: 800997105730250532, guid: 75a90cdb3e5674dd5bdb3cd84839bca4,
     type: 3}
   constructionEffectPrefab: {fileID: 5475108461781026497, guid: 4276f6fbb8a284f31a30784b5b70e124,
     type: 3}
-  testMode: 0
-  MainBuilding: 1
+  testMode: 1
+  MainBuilding: 0
 --- !u!65 &80143415
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -726,9 +726,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterName: 123
+  health: {fileID: 0}
   isDead: 0
-  maxHp: 100
-  _hp: 0
   _speed: 0
   attackPower: 0
   attackRate: 0
@@ -762,7 +761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1941762950
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class MainBuilding : Building
         MaxHP = 1000;
         CurrentHP = MaxHP;
         IsCritical = true;
+        Type = BuildingType.Main;
     }
 
     public override void Tick(BuildingLogicController controller)

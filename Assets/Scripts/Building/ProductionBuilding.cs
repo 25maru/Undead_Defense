@@ -11,6 +11,7 @@ public class ProductionBuilding : Building
     {
         MaxHP = 80;
         CurrentHP = MaxHP;
+        Type = BuildingType.Production;
     }
 
     public override void Tick(BuildingLogicController controller)

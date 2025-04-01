@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 건물 타입 이넘
+public enum BuildingType
+{
+    Production,
+    Defense,
+    Main,
+    Spawner
+}
+
 public class BuildingLogicController : MonoBehaviour
 {
     public GameObject bulletPrefab;
@@ -11,12 +20,35 @@ public class BuildingLogicController : MonoBehaviour
     
     [Header("건설 효과 프리팹 (파티클 등)")]
     [SerializeField] private GameObject constructionEffectPrefab;
+    
+    [Header("스폰 유닛")]
+    [SerializeField] private List<GameObject> soldierPrefabs; // 🔥 이게 진짜 프리팹 리스트
 
-    public void Initialize(Building buildingData)
+
+
+    public void Initialize(BuildingType type)
     {
-        building = buildingData;
+        switch (type)
+        {
+            case BuildingType.Spawner:
+                if (soldierPrefabs != null && soldierPrefabs.Count > 0)
+                    building = new SpawnerBuilding(soldierPrefabs);
+                else
+                    Debug.LogWarning("⚠️ 병사 프리팹 리스트가 비어있습니다.");
+                break;
+            case BuildingType.Defense:
+                building = new DefensiveBuilding();
+                break;
+
+            case BuildingType.Production:
+                building = new ProductionBuilding();
+                break;
+        }
+
         isBuilt = true;
     }
+
+
 
     private void Update()
     {
@@ -59,7 +91,7 @@ public class BuildingLogicController : MonoBehaviour
         var newController = newObj.GetComponent<BuildingLogicController>();
         if (newController != null)
         {
-            newController.Initialize(building); // 상태 넘겨줌
+            newController.Initialize(building.Type); // 상태 넘겨줌
         }
 
         Debug.Log("✅ 업그레이드 완료!");

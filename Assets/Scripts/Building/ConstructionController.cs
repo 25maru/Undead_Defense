@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -26,12 +27,25 @@ public class ConstructionController : MonoBehaviour
         
         if (testMode)
         {
-            Debug.Log("[건설 테스트] 테스트 모드로 초기화");
-            StartConstruction(new DefensiveBuilding());
-            // StartConstruction(new ProductionBuilding());
+            GameObject go = Instantiate(completedBuildingPrefab, transform.position, Quaternion.identity);
+            var logic = go.GetComponent<BuildingLogicController>();
+
+            if (logic != null)
+            {
+                logic.Initialize(BuildingType.Spawner); 
+            }
         }
-        
     }
+
+    public void SetMainBuilding(Building buildingData)
+    {
+        MainBuilding = true;
+        building = buildingData;
+
+        // 바로 건설 시작
+        StartConstruction(buildingData);
+    }
+
 
     public void StartConstruction(Building buildingData)
     {
@@ -64,7 +78,7 @@ public class ConstructionController : MonoBehaviour
             var logic = go.GetComponent<BuildingLogicController>();
             if (logic != null)
             {
-                logic.Initialize(building);
+                logic.Initialize(building.Type);
             }
         }
 
