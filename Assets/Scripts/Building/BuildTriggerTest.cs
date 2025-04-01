@@ -4,6 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum BuildingType
+{
+    Defensive,
+    Production
+}
+
 public class BuildTriggerTest : MonoBehaviour
 {
     [Header("입력 설정")]
@@ -12,9 +18,12 @@ public class BuildTriggerTest : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject goldUIRoot;
+    [SerializeField] private BuildingGoldUI goldUI;
 
     [Header("디버그 (테스트용)")]
     [SerializeField] private bool testMode;
+    [SerializeField] private BuildingType type;
+    [SerializeField] private int requiredGold;
 
     private ResourceManager resourceManager;
     private ConstructionController constructionController;
@@ -28,55 +37,79 @@ public class BuildTriggerTest : MonoBehaviour
     {
         resourceManager = ResourceManager.Instance;
         constructionController = GetComponent<ConstructionController>();
-        building = new DefensiveBuilding();
+
+        switch (type)
+        {
+            case BuildingType.Defensive:
+                building = new DefensiveBuilding();
+                break;
+
+            case BuildingType.Production:
+                building = new ProductionBuilding();
+                break;
+        }
+        
+        if (testMode) building.BuildCost = requiredGold;
+
+        goldUI.Setup(requiredGold);
     }
 
     private void Update()
     {
-        if (testMode && playerInZone)
+        if (!playerInZone) return;
+
+        // 테스트 모드
+        if (testMode)
         {
-            if (Input.GetKey(holdKey))
+            HandleHold(() =>
             {
-                if (!isHolding)
+                goldUI.FillNext(); // 골드 UI 채우기 (실제 자원 소비 없음)
+                if (goldUI.IsComplete())
                 {
-                    isHolding = true;
-                }
-
-                holdTimer += Time.deltaTime;
-                float remain = Mathf.Clamp(holdDuration - holdTimer, 0f, holdDuration);
-
-                if (holdTimer >= holdDuration)
-                {
+                    LevelManager.Instance.NightTrigger.BlockInput(false);
                     constructionController.StartConstruction(building);
-                    ResetHold();
+                    Invoke(nameof(ResetHold), 0.5f);
                 }
-            }
-            else if (isHolding)
-            {
-                ResetHold();
-            }
+            });
+            return;
         }
 
-        if (!playerInZone || resourceManager.Gold < building.BuildCost) return;
+        // 일반 모드
+        if (resourceManager.Gold < building.BuildCost) return;
 
+        HandleHold(() =>
+        {
+            goldUI.FillNext();
+            resourceManager.SpendGold(1);
+
+            if (goldUI.IsComplete())
+            {
+                LevelManager.Instance.NightTrigger.BlockInput(false);
+                constructionController.StartConstruction(building);
+                Invoke(nameof(ResetHold), 0.5f);
+            }
+        });
+    }
+
+    private void HandleHold(System.Action onCompleteStep)
+    {
         if (Input.GetKey(holdKey))
         {
             if (!isHolding)
             {
                 isHolding = true;
                 goldUIRoot.SetActive(true);
+                goldUI.Setup(building.BuildCost);
             }
 
             holdTimer += Time.deltaTime;
-            float remain = Mathf.Clamp(holdDuration - holdTimer, 0f, holdDuration);
 
-            // TODO: 남은 시간에 비례하게 골드 UI 채우는 코드 작성
-
-            if (holdTimer >= holdDuration)
+            // 시간에 따라 Fill 동작
+            float interval = holdDuration / building.BuildCost;
+            while (holdTimer >= interval)
             {
-                resourceManager.SpendGold(building.BuildCost);
-                constructionController.StartConstruction(building);
-                ResetHold();
+                holdTimer -= interval;
+                onCompleteStep.Invoke();
             }
         }
         else if (isHolding)
@@ -89,6 +122,16 @@ public class BuildTriggerTest : MonoBehaviour
     {
         isHolding = false;
         holdTimer = 0f;
+        // goldUIRoot.SetActive(false);
+        goldUI.ResetUI();
+    }
+
+    private void ExitZone()
+    {
+        playerInZone = false;
+        LevelManager.Instance.NightTrigger.BlockInput(false);
+        goldUI.SetGoldVisible(false);
+        ResetHold();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -96,6 +139,8 @@ public class BuildTriggerTest : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInZone = true;
+            LevelManager.Instance.NightTrigger.BlockInput(true);
+            goldUI.SetGoldVisible(true);
         }
     }
 
@@ -103,8 +148,7 @@ public class BuildTriggerTest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerInZone = false;
-            ResetHold();
+            ExitZone();
         }
     }
 }

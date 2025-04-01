@@ -24,6 +24,11 @@ public class LevelManager : MonoSingleton<LevelManager>
     /// </summary>
     public LevelCycle Cycle => levelCycle;
 
+    /// <summary>
+    /// 외부 접근을 위한 NightTrigger 프로퍼티
+    /// </summary>
+    public NightStartTrigger NightTrigger => nightTrigger;
+
     private int enemiesAlive = 0;
 
     protected override void Awake()

@@ -16,8 +16,22 @@ MonoBehaviour:
   spawnGroups:
   - spawnPointIndex: 0
     enemies:
-    - enemyPrefab: {fileID: 6346920272280219943, guid: 9890529ab710b704b9f0e99f6ee67a62,
+    - enemyPrefab: {fileID: 6346920272280219943, guid: a592c0a0cbe9e164cb819ae6b21afb06,
         type: 3}
-      enemyIcon: {fileID: 21300000, guid: 0a7695f3160009048bd1bd40ed388822, type: 3}
-      count: 25
+      enemyIcon: {fileID: -923788480, guid: 526d52f78c90d9a4484eb972ff9ebeb8, type: 3}
+      count: 3
+      delayBetweenSpawn: 1
+  - spawnPointIndex: 1
+    enemies:
+    - enemyPrefab: {fileID: 6346920272280219943, guid: a592c0a0cbe9e164cb819ae6b21afb06,
+        type: 3}
+      enemyIcon: {fileID: -923788480, guid: 526d52f78c90d9a4484eb972ff9ebeb8, type: 3}
+      count: 3
+      delayBetweenSpawn: 1
+  - spawnPointIndex: 2
+    enemies:
+    - enemyPrefab: {fileID: 6346920272280219943, guid: a592c0a0cbe9e164cb819ae6b21afb06,
+        type: 3}
+      enemyIcon: {fileID: -923788480, guid: 526d52f78c90d9a4484eb972ff9ebeb8, type: 3}
+      count: 3
       delayBetweenSpawn: 1

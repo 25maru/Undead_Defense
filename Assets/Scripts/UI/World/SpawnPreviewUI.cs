@@ -8,6 +8,10 @@ using DG.Tweening;
 /// </summary>
 public class SpawnPreviewUI : WorldUIBase
 {
+    [Header("렌더러")]
+    [SerializeField] private Renderer lineRenderer;
+    [SerializeField] private Renderer sphereRenderer;
+
     [Header("UI")]
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI countText;
@@ -17,16 +21,22 @@ public class SpawnPreviewUI : WorldUIBase
     [SerializeField] private Ease transitionEase = Ease.OutQuad;
     [SerializeField] private float transitionDuration = 0.5f;
 
-    private void Start()
-    {
-        canvasGroup.alpha = 0f;
-    }
+    private Material lineMat;
+    private Material sphereMat;
 
     /// <summary>
     /// 아이콘과 수량 정보를 설정합니다.
     /// </summary>
     public void SetInfo(int count, Sprite icon)
     {
+        lineMat = lineRenderer.material;
+        lineMat.SetFloat("_Alpha", 0f);
+
+        sphereMat = sphereRenderer.material;
+        sphereMat.SetFloat("_Alpha", 0f);
+
+        canvasGroup.alpha = 0f;
+
         if (iconImage != null)
             iconImage.sprite = icon;
 
@@ -39,9 +49,19 @@ public class SpawnPreviewUI : WorldUIBase
     /// </summary>
     public void SetPreviewVisible(bool visible, System.Action onComplete = null)
     {
+        float alpha = visible ? 1f : 0f;
+
+        DOTween.Kill(lineMat);
+        DOTween.Kill(sphereMat);
         DOTween.Kill(canvasGroup);
 
-        canvasGroup.DOFade(visible ? 1f : 0f, transitionDuration)
+        lineMat.DOFloat(alpha, "_Alpha", transitionDuration)
+            .SetEase(transitionEase);
+
+        sphereMat.DOFloat(alpha, "_Alpha", transitionDuration)
+            .SetEase(transitionEase);
+
+        canvasGroup.DOFade(alpha, transitionDuration)
             .SetEase(transitionEase)
             .OnComplete(() => onComplete?.Invoke());
     }
