@@ -44,7 +44,7 @@ public class StageUI : BaseUI
         {
             stage.image.color = stage.isCleared ? new Color(1f, 1f, 1f) : new Color(85f / 255f, 85f / 255f, 85f / 255f);
             stage.button.interactable = stage.isCleared;
-            stage.button.image.color = stage.isCleared ? Color.white : Color.gray;
+            stage.button.image.color = stage.isCleared ? stage.button.colors.normalColor : Color.gray;
         }
     }
 
