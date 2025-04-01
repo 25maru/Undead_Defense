@@ -15,6 +15,10 @@ public class ProjectileController : MonoBehaviour
     }
     private void Update()
     {
+        if(target == null)
+        {
+            Destroy(this.gameObject);
+        }
         OnHit();
     }
     private void FixedUpdate()

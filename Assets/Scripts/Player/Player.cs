@@ -105,6 +105,7 @@ public class Player : MonoBehaviour
             target = null;
             return;
         }
+        targets.RemoveAll(item => item == null);
         for (int i = 0; i < targets.Count; i++)
         {
             if (target == null)
