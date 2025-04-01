@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] protected float _maxHp = 100;
     [SerializeField] private float _hp;
+    
     event Action onDeath;
     HealthBar healthBar;
 
@@ -15,7 +16,7 @@ public class Health : MonoBehaviour
         healthBar = GetComponentInChildren<HealthBar>();
         if(healthBar == null)
         {
-            Debug.Log($"{gameObject}ÀÇ ÀÚ½Ä¿¡ healthBar ½ºÅ©¸³Æ®°¡ ºÙ¾îÀÖÁö¾Ê½À´Ï´Ù.");
+            Debug.Log($"{gameObject}ï¿½ï¿½ ï¿½Ú½Ä¿ï¿½ healthBar ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
         }
         GetComponentInChildren<Canvas>().worldCamera = Camera.main;
     }
@@ -40,7 +41,15 @@ public class Health : MonoBehaviour
     {
         hp -= damage;
         
+        if(hp <= 0)
+            onDeath?.Invoke();
+        
         return hp <= 0;
+    }
+
+    public void Heal(float heal)
+    {
+        hp = Mathf.Min(hp + heal, _maxHp);
     }
 
     public void ChangeHP(float value)
@@ -58,5 +67,10 @@ public class Health : MonoBehaviour
     public void AddDieEvent(Action dieEvent)
     {
         onDeath += dieEvent;
+    }
+
+    public void MinusDieEvent(Action dieEvent)
+    {
+        onDeath -= dieEvent;
     }
 }
