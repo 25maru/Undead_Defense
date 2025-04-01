@@ -32,7 +32,7 @@ public class ConstructionController : MonoBehaviour
 
             if (logic != null)
             {
-                logic.Initialize(BuildingType.Spawner); 
+                logic.Initialize(BuildingType.Defense); 
             }
         }
     }

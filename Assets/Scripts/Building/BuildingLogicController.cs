@@ -24,7 +24,26 @@ public class BuildingLogicController : MonoBehaviour
     [Header("스폰 유닛")]
     [SerializeField] private List<GameObject> soldierPrefabs; // 🔥 이게 진짜 프리팹 리스트
 
+    [Header("시각화")]
+    [SerializeField] private LineRenderer rangeRenderer;
+    [SerializeField] private int circleSegments = 60;
 
+    private void DrawRangeCircle(float radius)
+    {
+        if (rangeRenderer == null) return;
+
+        rangeRenderer.positionCount = circleSegments + 1;
+
+        float angle = 0f;
+        for (int i = 0; i <= circleSegments; i++)
+        {
+            float x = Mathf.Cos(angle) * radius;
+            float z = Mathf.Sin(angle) * radius;
+            Vector3 pos = transform.position + new Vector3(x, 1f, z); // 살짝 띄움
+            rangeRenderer.SetPosition(i, pos);
+            angle += 2 * Mathf.PI / circleSegments;
+        }
+    }
 
     public void Initialize(BuildingType type)
     {
@@ -44,11 +63,14 @@ public class BuildingLogicController : MonoBehaviour
                 building = new ProductionBuilding();
                 break;
         }
-
+        
+        if (building is DefensiveBuilding def)
+        {
+            DrawRangeCircle(def.Range);
+        }
+        
         isBuilt = true;
     }
-
-
 
     private void Update()
     {
@@ -104,4 +126,15 @@ public class BuildingLogicController : MonoBehaviour
     }
 
     public GameObject GetBulletPrefab() => bulletPrefab;
+    
+    private void OnDrawGizmos()
+    {
+        // 방어 건물인지 확인
+        if (building is DefensiveBuilding def)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(transform.position, def.Range);
+        }
+    }
+
 }
