@@ -45,7 +45,7 @@ public class SoldierAttackState : SoldierBaseState
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            soldier.model.localRotation = Quaternion.RotateTowards(soldier.model.localRotation, targetRotation, soldier.rotateSpeed);
+            soldier.transform.rotation = Quaternion.RotateTowards(soldier.transform.rotation, targetRotation, soldier.rotateSpeed);
         }
     }
     protected override void Move()

@@ -13,7 +13,6 @@ public class PlayerDieState : PlayerBaseState
     {
         base.Enter();
         StartAnimation(playerStateMachine.Player.AnimationData.DieParameterHash);
-        playerStateMachine.isDeath = true;
     }
     public override void Exit()
     {
