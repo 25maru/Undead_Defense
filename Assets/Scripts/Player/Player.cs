@@ -11,16 +11,22 @@ public class Player : MonoBehaviour
     public Transform model;
     public List<Transform> targets;
     public Transform target;
+
+    
+    
     [SerializeField] PlayerOrderCollider playerOrderCollider;
 
     public float rotateSpeed;
     [SerializeField] float moveSpeed;
+    public float damage;
+    public float projectileSpeed;
     [SerializeField] float downSpeed;
     [SerializeField] LayerMask groundMask;
     public float detectingDistance;
 
     bool isGround;
     public Health health;
+    bool isDeath = false;
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
 
@@ -29,6 +35,7 @@ public class Player : MonoBehaviour
         AnimationData = new AnimationData();
         AnimationData.Initialize();
         health = GetComponent<Health>();
+        health.AddDieEvent(OnDeath);
         Controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         playerStateMachine = new PlayerStateMachine(this);
@@ -37,7 +44,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         IsGround();
-        IsDead();
         SetTarget();
         playerStateMachine.HandleInput();
         playerStateMachine.Update();
@@ -82,6 +88,8 @@ public class Player : MonoBehaviour
     
     void move()
     {
+        if(isDeath)
+            return;
         Vector3 movedirection = new Vector3(curMoveInput.x, 0 ,curMoveInput.y);
         if (!isGround)
         {
@@ -117,12 +125,9 @@ public class Player : MonoBehaviour
         }
     }
 
-    void IsDead()
+    void OnDeath()
     {
-        // 죽음 사용 예시
-        if (health.hp <= 0)
-        {
-            Destroy(this.gameObject);
-        }
+        playerStateMachine.ChangeState(playerStateMachine.DieState);
+        isDeath = true;
     }
 }

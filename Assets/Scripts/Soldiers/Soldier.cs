@@ -30,6 +30,8 @@ public class Soldier : MonoBehaviour
     public float rotateSpeed;
     public float moveSpeed;
     public float downSpeed;
+    public float damage;
+    public float projectileSpeed;
 
     public CharacterController Controller { get; private set; }
     [field: SerializeField] public AnimationData AnimationData { get; private set; }
@@ -40,6 +42,7 @@ public class Soldier : MonoBehaviour
         AnimationData.Initialize();
 
         health = GetComponent<Health>();
+        health.AddDieEvent(OnDeath);
         agent.updatePosition = false;
         agent.updateRotation = false;
         Controller = GetComponent<CharacterController>();
@@ -54,7 +57,6 @@ public class Soldier : MonoBehaviour
     private void Update()
     {
         IsGround();
-        IsDead();
         SetTarget();
         soldierStateMachine.HandleInput();
         soldierStateMachine.Update();
@@ -110,13 +112,15 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void IsDead()
+    void OnDeath()
     {
-        // 죽음 사용 예시
-        if (health.hp < 0)
-        {
-            Destroy(gameObject);
-        }
+        soldierStateMachine.ChangeState(soldierStateMachine.DieState);
+        soldierStateMachine.isDeath = true;
+        Invoke("DeathDisable", 3f);
+    }
+    void DeathDisable()
+    {
+        gameObject.SetActive(false);
     }
     
     private void OnDrawGizmos()

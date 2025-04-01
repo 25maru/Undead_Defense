@@ -28,6 +28,7 @@ public class HealthBar : WorldUIBase
     {
         mainBar.fillAmount = currentPercent;
         delayBar.fillAmount = currentPercent;
+
     }
 
     /// <summary>
