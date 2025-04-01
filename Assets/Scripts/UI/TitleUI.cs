@@ -2,6 +2,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class TitleUI : BaseUI
 {
@@ -15,7 +16,7 @@ public class TitleUI : BaseUI
     [SerializeField] private RectTransform rightDoor;
     [SerializeField] private RectTransform ghost;
 
-    WaitForSeconds wait = new WaitForSeconds(1f);
+    readonly WaitForSeconds wait = new(1f);
 
 
     public override void Init(UIManager uiManager)
@@ -38,11 +39,15 @@ public class TitleUI : BaseUI
     {
         descPanel.SetActive(false);
 
-        leftDoor.DOAnchorPosX(-750, 1.2f);
-        rightDoor.DOAnchorPosX(750, 1.2f);
+        leftDoor.DOAnchorPosX(-750, 1.2f)
+            .SetUpdate(true);
+        rightDoor.DOAnchorPosX(750, 1.2f)
+            .SetUpdate(true);
 
-        leftDoor.DORotate(new Vector3(0, -65, 0), 1f, RotateMode.WorldAxisAdd);
-        rightDoor.DORotate(new Vector3(0, 65, 0), 1f, RotateMode.WorldAxisAdd);
+        leftDoor.DORotate(new Vector3(0, -65, 0), 1f, RotateMode.WorldAxisAdd)
+            .SetUpdate(true);
+        rightDoor.DORotate(new Vector3(0, 65, 0), 1f, RotateMode.WorldAxisAdd)
+            .SetUpdate(true);
 
         yield return wait;
 
@@ -56,18 +61,23 @@ public class TitleUI : BaseUI
 
     void MoveGhost()
     {
-        ghost.DOLocalMoveY(40, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        ghost.DOLocalMoveY(40, 1f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine)
+            .SetUpdate(true);
     }
 
 
     public IEnumerator Unlock(RectTransform key)
     {
-        key.DOAnchorPos(new Vector3(-25, -380, 0), 1f);
-        key.DORotate(new Vector3(180, -90, 115), 1f);
+        key.DOAnchorPos(new Vector3(-25, -380, 0), 1f)
+            .SetUpdate(true);
+        key.DORotate(new Vector3(180, -90, 115), 1f)
+            .SetUpdate(true);
 
         yield return wait;
 
-        StartCoroutine("GateOpen");
+        StartCoroutine(GateOpen());
     }
 
     public void OnClickPlayButton()
@@ -77,7 +87,11 @@ public class TitleUI : BaseUI
 
     public void OnClickQuitButton()
     {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     protected override UIState GetUIState()
