@@ -222,6 +222,9 @@ public class Monster : MonoBehaviour, IChase
     
     protected virtual void OnDead()
     {
+        navMeshAgent.isStopped = true;
+        navMeshAgent.velocity = Vector3.zero;
+        
         anim.CrossFade(dieState, 0.1f);
         isDead = true;
         ChangeState(State.Dead);
@@ -235,7 +238,7 @@ public class Monster : MonoBehaviour, IChase
 
     protected virtual void DropItem()
     {
-        Instantiate(dropItem, transform.position, Quaternion.identity);
+        Instantiate(dropItem, transform.position + (Vector3.up * 0.25f), Quaternion.identity);
     }
     
     protected void ChangeState(State newState)
