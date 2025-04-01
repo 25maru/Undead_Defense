@@ -24,7 +24,7 @@ public class SoldierAttackState : SoldierBaseState
         {
             soldierStateMachine.ChangeState(soldierStateMachine.preState);
         }
-        if(Vector3.Angle(soldier.transform.forward, soldier.target.position - soldier.transform.position) <= 10f)
+        if(Vector3.Angle(soldier.model.forward, soldier.target.position - soldier.transform.position) <= 10f)
         {
             StartAnimation(soldier.AnimationData.AttackParameterHash);
         }

@@ -17,4 +17,8 @@ public class ArcherAnimationScript : MonoBehaviour
         ProjectileController controller = Instantiate(projectilePrefab, projectileStartPosition.position, Quaternion.LookRotation(soldier.target.position - transform.position)).GetComponent<ProjectileController>();
         controller.Init(soldier.target, soldier.damage, soldier.projectileSpeed);
     }
+    public void MeleeAttack()
+    {
+        soldier.target.GetComponent<Health>().OnDamaged(soldier.damage);
+    }
 }

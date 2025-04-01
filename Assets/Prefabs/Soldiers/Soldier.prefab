@@ -298,6 +298,7 @@ MonoBehaviour:
   moveSpeed: 6
   downSpeed: 10
   damage: 10
+  projectileSpeed: 0
 --- !u!95 &5384989178071291271
 Animator:
   serializedVersion: 5
@@ -349,7 +350,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5042192604203388104
 Transform:
   m_ObjectHideFlags: 0
