@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArcherAnimationScript : MonoBehaviour
+public class SoldiersAnimationScript : MonoBehaviour
 {
     Soldier soldier;
     [SerializeField] GameObject projectilePrefab;
