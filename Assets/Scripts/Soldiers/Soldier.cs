@@ -73,9 +73,10 @@ public class Soldier : MonoBehaviour
             target = null;
             return;
         }
+        targets.RemoveAll(item => item == null);
         for (int i = 0; i < targets.Count; i++)
         {
-            if (target == null)
+            if (target == null || target.gameObject == null)
                 target = targets[i];
             if ((target.position - transform.position).sqrMagnitude > (targets[i].position - transform.position).sqrMagnitude)
                 target = targets[i];
