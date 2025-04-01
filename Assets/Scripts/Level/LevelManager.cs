@@ -156,11 +156,11 @@ public class LevelManager : MonoSingleton<LevelManager>
                 {
                     void OnMonsterDeath()
                     {
-                        monster.action -= OnMonsterDeath;
+                        monster.health.OnDeath -= OnMonsterDeath;
                         ReportEnemyDeath();
                     }
 
-                    monster.action += OnMonsterDeath;
+                    monster.health.OnDeath += OnMonsterDeath;
                     enemiesAlive++;
                 }
 
