@@ -9,11 +9,13 @@ public class GameClearUI : BaseUI
         base.Init(uiManager);
         stageButton.onClick.AddListener(OnClickStageButton);
     }
+
     public void OnClickStageButton()
     {
         UIManager.Instance.stageUI.UpdateUI();
         UIManager.Instance.ChangeState(UIState.STAGE);
     }
+
     protected override UIState GetUIState()
     {
         return UIState.GAMECLEAR;

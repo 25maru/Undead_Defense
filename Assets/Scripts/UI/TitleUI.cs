@@ -7,7 +7,7 @@ public class TitleUI : BaseUI
 {
     [SerializeField] private GameObject titleText;
     [SerializeField] private GameObject descPanel;
-
+    
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
 
@@ -38,8 +38,8 @@ public class TitleUI : BaseUI
     {
         descPanel.SetActive(false);
 
-        leftDoor.DOAnchorPosX(-750, 1.5f);
-        rightDoor.DOAnchorPosX(750, 1.5f);
+        leftDoor.DOAnchorPosX(-750, 1.2f);
+        rightDoor.DOAnchorPosX(750, 1.2f);
 
         leftDoor.DORotate(new Vector3(0, -65, 0), 1f, RotateMode.WorldAxisAdd);
         rightDoor.DORotate(new Vector3(0, 65, 0), 1f, RotateMode.WorldAxisAdd);
@@ -59,9 +59,10 @@ public class TitleUI : BaseUI
         ghost.DOLocalMoveY(40, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
+
     public IEnumerator Unlock(RectTransform key)
     {
-        key.DOAnchorPos(new Vector3(-30, -380, 0), 1f);
+        key.DOAnchorPos(new Vector3(-25, -380, 0), 1f);
         key.DORotate(new Vector3(180, -90, 115), 1f);
 
         yield return wait;
