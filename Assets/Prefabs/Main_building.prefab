@@ -52,6 +52,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 0}
   upgradedPrefab: {fileID: 0}
   constructionEffectPrefab: {fileID: 0}
+  soldierPrefabs: []
+  rangeRenderer: {fileID: 0}
+  circleSegments: 60
+  healthBarPrefab: {fileID: 4200445364965671292, guid: 083c59ea27959c04abcb7bff48874e65,
+    type: 3}
 --- !u!1001 &2509816898047485326
 PrefabInstance:
   m_ObjectHideFlags: 0

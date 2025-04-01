@@ -24,7 +24,32 @@ public class BuildingLogicController : MonoBehaviour
     [Header("스폰 유닛")]
     [SerializeField] private List<GameObject> soldierPrefabs; // 🔥 이게 진짜 프리팹 리스트
 
+    [Header("시각화")]
+    [SerializeField] private LineRenderer rangeRenderer;
+    [SerializeField] private int circleSegments = 60;
+    
+    [Header("체력바")]
+    [SerializeField] private GameObject healthBarPrefab;
+    private HealthBar healthBarInstance;
 
+
+
+    private void DrawRangeCircle(float radius)
+    {
+        if (rangeRenderer == null) return;
+
+        rangeRenderer.positionCount = circleSegments + 1;
+
+        float angle = 0f;
+        for (int i = 0; i <= circleSegments; i++)
+        {
+            float x = Mathf.Cos(angle) * radius;
+            float z = Mathf.Sin(angle) * radius;
+            Vector3 pos = transform.position + new Vector3(x, 1f, z); // 살짝 띄움
+            rangeRenderer.SetPosition(i, pos);
+            angle += 2 * Mathf.PI / circleSegments;
+        }
+    }
 
     public void Initialize(BuildingType type)
     {
@@ -44,11 +69,33 @@ public class BuildingLogicController : MonoBehaviour
                 building = new ProductionBuilding();
                 break;
         }
+        
+        if (building is DefensiveBuilding def)
+        {
+            DrawRangeCircle(def.Range);
+        }
+        
+        // 체력바 프리팹 생성 및 세팅
+        if (healthBarPrefab != null)
+        {
+            GameObject bar = Instantiate(healthBarPrefab, transform);
 
+            // 머리 위로 띄우기 (y=5f는 예시, 건물 크기에 맞게 조정)
+            bar.transform.localPosition = new Vector3(0, 20f, 0);
+
+            healthBarInstance = bar.GetComponent<HealthBar>();
+
+            if (healthBarInstance != null)
+            {
+                float hp = (float)building.CurrentHP / building.MaxHP;
+                healthBarInstance.SetHealth(hp);
+            }
+        }
+
+
+        
         isBuilt = true;
     }
-
-
 
     private void Update()
     {
@@ -101,7 +148,13 @@ public class BuildingLogicController : MonoBehaviour
     public void TakeDamage(int amount)
     {
         building?.TakeDamage(amount, this);
-    }
 
+        if (healthBarInstance != null)
+        {
+            float hp = (float)building.CurrentHP / building.MaxHP;
+            healthBarInstance.SetHealth(hp);
+        }
+    }
+    
     public GameObject GetBulletPrefab() => bulletPrefab;
 }
