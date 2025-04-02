@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6143315777747726189}
   - component: {fileID: 8448777473294709463}
   - component: {fileID: 7825916884833941704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Soldiers_Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6581507212607849520}
   - component: {fileID: 8510024129644686313}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main_building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,6 +69,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EA_Arch_Wall03_Corner_01a (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698160412483968034, guid: 08fe59fe96ff59d4baf2df996240243e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4042352170408117912, guid: 08fe59fe96ff59d4baf2df996240243e,
         type: 3}
@@ -204,6 +209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EA_Arch_Wall03_Corner_01b
       objectReference: {fileID: 0}
+    - target: {fileID: 1036046596217209227, guid: 0a5e94e6e88a20247b26bc1cb571b755,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -227,6 +237,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EA_Arch_Wall03_Corner_01a
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698160412483968034, guid: 08fe59fe96ff59d4baf2df996240243e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4042352170408117912, guid: 08fe59fe96ff59d4baf2df996240243e,
         type: 3}
@@ -382,6 +397,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EA_Arch_Wall03_Corner_01b (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1036046596217209227, guid: 0a5e94e6e88a20247b26bc1cb571b755,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -405,6 +425,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EA03_Environment_Nature_Tree_1b_PRE
+      objectReference: {fileID: 0}
+    - target: {fileID: 2618530606202015410, guid: 8091417b1411d6b479a03c98f612254f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3394925884671038472, guid: 8091417b1411d6b479a03c98f612254f,
         type: 3}
