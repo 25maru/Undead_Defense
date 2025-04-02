@@ -93,7 +93,7 @@ public class BuildTriggerTest : MonoBehaviour
 
     private void Update()
     {
-        if (!playerInZone || isBuilt) return;
+        if (!playerInZone || isBuilt || task == TargetTask.None || requiredGold <= 0) return;
 
         // 테스트 모드 (골드 소비 X)
         if (testMode)
@@ -114,8 +114,8 @@ public class BuildTriggerTest : MonoBehaviour
         // 일반 모드
         if (resourceManager.Gold <= 0)
         {
-            ResetHold();
             ResourceManager.Instance.AddGold(useGold);
+            ResetHold();
             return;
         }
 
@@ -158,8 +158,8 @@ public class BuildTriggerTest : MonoBehaviour
         }
         else if (isHolding)
         {
-            ResetHold();
             ResourceManager.Instance.AddGold(useGold);
+            ResetHold();
         }
     }
 

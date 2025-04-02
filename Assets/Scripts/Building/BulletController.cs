@@ -31,14 +31,10 @@ public class BulletController : MonoBehaviour
             targetPos = targetCol.bounds.center;
 
         Vector3 dir = (targetPos - transform.position).normalized;
-
         Quaternion targetRotation = Quaternion.LookRotation(dir);
 
-        // 이동, 회전 코드 리펙터링 했습니다. (rotateSpeed 활용)
-        transform.SetPositionAndRotation(
-            position: transform.position + speed * Time.deltaTime * transform.forward,
-            rotation: Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime)
-        );
+        transform.position += dir * speed * Time.deltaTime;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)

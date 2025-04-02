@@ -32,7 +32,6 @@ public class BuildingGoldUI : WorldUIBase
 
     private int totalGold;
     private int currentFilled;
-    private bool isBuilt;
 
     public float FillInterval => fillInterval;
 

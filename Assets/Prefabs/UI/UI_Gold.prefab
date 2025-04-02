@@ -225,7 +225,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2647101064860309372
 MonoBehaviour:
@@ -396,11 +396,11 @@ RectTransform:
   - {fileID: 885081970862399849}
   m_Father: {fileID: 6320608269922190913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -12}
   m_SizeDelta: {x: 52, y: 52}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &4376114011342718667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +441,7 @@ MonoBehaviour:
     - {fileID: 1125413605293166264}
   goldSoundClip: {fileID: 8300000, guid: 3a9677db3c2196e428780aa0a7d93533, type: 3}
   goldSoundVolume: 1
+  fillInterval: 0.25
   fillDuration: 0.5
   transitionEase: 6
   transitionDuration: 0.5

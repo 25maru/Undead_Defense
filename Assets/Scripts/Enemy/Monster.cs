@@ -42,6 +42,8 @@ public class Monster : MonoBehaviour, IChase
     
     [Header("Drop Item")]
     [SerializeField] private GameObject dropItem;
+    [Range(0f, 100f)]
+    [SerializeField] private float dropRate = 50f;
     
     protected NavMeshAgent navMeshAgent;
     protected Animator anim;
@@ -234,7 +236,10 @@ public class Monster : MonoBehaviour, IChase
 
     protected virtual void DropItem()
     {
-        Instantiate(dropItem, transform.position + (Vector3.up * 0.25f), Quaternion.identity);
+        if (UnityEngine.Random.Range(0f, 100f) <= dropRate)
+        {
+            Instantiate(dropItem, transform.position + (Vector3.up * 0.25f), Quaternion.identity);
+        }
     }
     
     protected void ChangeState(State newState)
@@ -245,10 +250,12 @@ public class Monster : MonoBehaviour, IChase
     private void SearchMaterial()
     {
         // 모든 자식 오브젝트의 Renderer를 수집
-        List<Material> materialList = new List<Material>();
+        List<Material> materialList = new();
+
         // 부모와 자식을 포함하여 모든 Renderer 탐색
         MeshRenderer[] renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         SkinnedMeshRenderer[] skinedRenderers = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        
         foreach (Renderer renderer in renderers)
         {
             materialList.AddRange(renderer.materials);

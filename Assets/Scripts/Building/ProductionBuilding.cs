@@ -7,9 +7,10 @@ public class ProductionBuilding : Building
     private float cooldown = 5f;
 
     private int goldAmount = 1;
-    
-    // 리소스 매니저 선언을 없애고, 싱글톤으로 가져오도록 수정했습니다.
-    // private ResourceManager resourceManager;
+    private GameObject goldPrefab;
+
+    private readonly float spawnRadius = 7f; // 생성 반경
+    private readonly float minDistance = 3.5f; // 중심에서 너무 가까운 곳 방지
 
     public ProductionBuilding(int gold = 1) : base("Gold Mine", 80, 1.5f)
     {
@@ -21,15 +22,22 @@ public class ProductionBuilding : Building
 
     public override void Tick(BuildingLogicController controller)
     {
-        // 밤에만 작동하도록 수정했습니다. 충돌 시 이 코드도 포함해주세요!
         if (LevelManager.Instance.Cycle.CurrentState == LevelCycle.CycleState.Day) return;
 
         timer += Time.deltaTime;
         if (timer >= cooldown)
         {
-            // 수정한 부분
-            ResourceManager.Instance.AddGold(goldAmount);
             timer = 0f;
+            goldPrefab = controller.GetGoldPrefab();
+
+            for (int i = 0; i < goldAmount; i++)
+            {
+                Vector2 randomCircle = Random.insideUnitCircle.normalized * Random.Range(minDistance, spawnRadius);
+                Vector3 offset = new(randomCircle.x, 0, randomCircle.y);
+                Vector3 spawnPos = controller.transform.position + offset + Vector3.up * 0.25f;
+
+                GameObject.Instantiate(goldPrefab, spawnPos, Quaternion.identity);
+            }
         }
     }
 
@@ -46,4 +54,3 @@ public class ProductionBuilding : Building
         Debug.Log("💥 타워 파괴됨!");
     }
 }
-

@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 3322109618237949676}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4999914, y: 0.8, z: 15.2800045}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -173,7 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gold: 1
-  clips: {fileID: 8300000, guid: 7e58a23f2b8eff04eb9d3578ed463313, type: 3}
+  magnetRange: 5
+  magnetCancelRange: 7.5
+  baseMoveSpeed: 2.5
+  speedMultiplier: 5
+  clip: {fileID: 8300000, guid: 7e58a23f2b8eff04eb9d3578ed463313, type: 3}
   volume: 1
 --- !u!1 &3329187294403832314
 GameObject:

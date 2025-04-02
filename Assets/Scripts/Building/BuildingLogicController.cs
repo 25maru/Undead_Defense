@@ -14,6 +14,7 @@ public enum BuildingType
 public class BuildingLogicController : MonoBehaviour
 {
     public GameObject bulletPrefab;
+    public GameObject goldPrefab;
     public GameObject upgradedPrefab;
     private Building building;
     private bool isBuilt = false;
@@ -191,4 +192,5 @@ public class BuildingLogicController : MonoBehaviour
     }
     
     public GameObject GetBulletPrefab() => bulletPrefab;
+    public GameObject GetGoldPrefab() => goldPrefab;
 }

@@ -82,11 +82,14 @@ public class TitleUI : BaseUI
 
     public void OnClickPlayButton()
     {
+        DOTween.Kill(ghost);
         UIManager.Instance.ChangeState(UIState.STAGE);
     }
 
     public void OnClickQuitButton()
     {
+        DOTween.Kill(ghost);
+        
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
