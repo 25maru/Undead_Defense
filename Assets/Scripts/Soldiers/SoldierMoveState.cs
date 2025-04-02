@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SoldierMoveState : SoldierBaseState
 {
+    Vector3 lastPosition;
+    float stuckTime = 0f; // 끼인 시간 체크
+    float stuckThreshold = 2f; // 2초 이상 끼여 있으면 삭제
+    float minMoveDistance = 0.05f;
     public SoldierMoveState(SoldierStateMachine soldierStateMachine) : base(soldierStateMachine)
     {
     }
@@ -32,6 +36,7 @@ public class SoldierMoveState : SoldierBaseState
             soldierStateMachine.ChangeState(soldierStateMachine.AttackState);
             return;
         }
+        CheckStuck();
     }
     public override void PhysicsUpdate()
     {
@@ -63,5 +68,24 @@ public class SoldierMoveState : SoldierBaseState
             soldier.orderTarget = null;
         }
     }
+    void CheckStuck()
+    {
+        float distanceMoved = Vector3.Distance(soldier.transform.position, lastPosition);
 
+        if (distanceMoved < minMoveDistance)
+        {
+            stuckTime += Time.deltaTime;
+        }
+        else
+        {
+            stuckTime = 0f;
+        }
+
+        lastPosition = soldier.transform.position;
+
+        if (stuckTime >= stuckThreshold)
+        {
+            soldier.orderTarget = null;
+        }
+    }
 }
