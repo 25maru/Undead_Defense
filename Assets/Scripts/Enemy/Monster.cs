@@ -42,6 +42,8 @@ public class Monster : MonoBehaviour, IChase
     
     [Header("Drop Item")]
     [SerializeField] private GameObject dropItem;
+    [Range(0f, 100f)]
+    [SerializeField] private float dropRate = 50f;
     
     protected NavMeshAgent navMeshAgent;
     protected Animator anim;
@@ -115,33 +117,29 @@ public class Monster : MonoBehaviour, IChase
         if(Time.time - lastAttackTime > attackRate)
         {
             lastAttackTime = Time.time;
-            StartCoroutine(DelayAttack(0.6f));
             
             sound.PlaySound(SoundType.Attack);
             
             ChangeState(State.Attack);
         }
     }
-
-    IEnumerator DelayAttack(float time)
+    
+    public void HitInDistance()
     {
-        yield return new WaitForSeconds(time);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, distance, targetLayer);
 
-        if (target.gameObject.layer == LayerMask.NameToLayer("Player") ||
-            target.gameObject.layer == LayerMask.NameToLayer("Soldier"))
+        foreach (var hitCollider in hitColliders)
         {
-           var targetHealth = target.GetComponent<Health>();
-           targetHealth?.OnDamaged(attackPower);
-        }
-
-        if (target.gameObject.layer == LayerMask.NameToLayer("Building"))
-        {
-            var targetBuilding = target.GetComponent<BuildingLogicController>();
-            targetBuilding?.TakeDamage(attackPower);
+            if (hitCollider.transform == target)
+            {
+                var targetHealth = hitCollider.GetComponent<Health>();
+                var targetBuilding = hitCollider.GetComponent<BuildingLogicController>();
+                targetHealth?.OnDamaged(attackPower);
+                targetBuilding?.TakeDamage(attackPower);
+            }
         }
     }
     
-
     protected virtual void Move()
     {
         if (inRange)
@@ -238,7 +236,10 @@ public class Monster : MonoBehaviour, IChase
 
     protected virtual void DropItem()
     {
-        Instantiate(dropItem, transform.position + (Vector3.up * 0.25f), Quaternion.identity);
+        if (UnityEngine.Random.Range(0f, 100f) <= dropRate)
+        {
+            Instantiate(dropItem, transform.position + (Vector3.up * 0.25f), Quaternion.identity);
+        }
     }
     
     protected void ChangeState(State newState)
@@ -249,10 +250,12 @@ public class Monster : MonoBehaviour, IChase
     private void SearchMaterial()
     {
         // 모든 자식 오브젝트의 Renderer를 수집
-        List<Material> materialList = new List<Material>();
+        List<Material> materialList = new();
+
         // 부모와 자식을 포함하여 모든 Renderer 탐색
         MeshRenderer[] renderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         SkinnedMeshRenderer[] skinedRenderers = gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        
         foreach (Renderer renderer in renderers)
         {
             materialList.AddRange(renderer.materials);

@@ -37,7 +37,7 @@ public class NightStartTrigger : MonoBehaviour
 
     private ColorAdjustments colorAdjustments;
     private readonly float dayExposure = 0.6f;
-    private readonly float nightExposure = -0.6f;
+    private readonly float nightExposure = 0f;
 
     private readonly float lightDayXRotation = 50f;
     private readonly float lightNightXRotation = 230f;
@@ -169,7 +169,7 @@ public class NightStartTrigger : MonoBehaviour
         Vector3 currentRotation = directionalLight.transform.eulerAngles;
         Vector3 targetRotation = new(lightDayXRotation, currentRotation.y, currentRotation.z);
 
-        directionalLight.transform.DORotate(targetRotation, transitionDuration)
+        directionalLight.transform.DOLocalRotate(targetRotation, transitionDuration)
             .SetEase(transitionEase)
             .OnComplete(() => onComplete?.Invoke());
     }
@@ -196,7 +196,7 @@ public class NightStartTrigger : MonoBehaviour
         Vector3 currentRotation = directionalLight.transform.eulerAngles;
         Vector3 targetRotation = new(lightNightXRotation, currentRotation.y, currentRotation.z);
 
-        directionalLight.transform.DORotate(targetRotation, transitionDuration)
+        directionalLight.transform.DOLocalRotate(targetRotation, transitionDuration)
             .SetEase(transitionEase)
             .OnComplete(() => onComplete?.Invoke());
     }

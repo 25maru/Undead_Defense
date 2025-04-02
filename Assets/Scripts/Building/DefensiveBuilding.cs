@@ -4,75 +4,90 @@ using UnityEngine;
 
 public class DefensiveBuilding : Building
 {
-    public float Range = 30f;
-    public float Cooldown = 3f;
     private float timer;
+    private float cooldown = 2.5f;
 
-    public DefensiveBuilding() : base("Tower", 100, 2f)
+    public float attackRange = 20f;
+
+    private float realDamage = 0f;
+    private readonly Collider[] enemyBuffer = new Collider[50];
+
+    public DefensiveBuilding(float damage = 50f, float range = 20f) : base("Tower", 100, 2f)
     {
+        Type = BuildingType.Defense;
         MaxHP = 100;
         CurrentHP = MaxHP;
-        Type = BuildingType.Defense;
+        realDamage = damage;
+        attackRange = range;
     }
 
     public override void Tick(BuildingLogicController controller)
     {
+        // 밤에만 작동하도록 수정했습니다. 충돌 시 이 코드도 포함해주세요!
+        if (LevelManager.Instance.Cycle.CurrentState == LevelCycle.CycleState.Day) return;
+        
         timer += Time.deltaTime;
-        if (timer >= Cooldown)
+        if (timer >= cooldown)
         {
-            Collider[] enemies = Physics.OverlapSphere(controller.transform.position, Range, LayerMask.GetMask("Enemy"));
-            if (enemies.Length > 0)
+            int enemyCount = Physics.OverlapSphereNonAlloc(
+                controller.transform.position,
+                attackRange,
+                enemyBuffer,
+                LayerMask.GetMask("Enemy")
+            );
+
+            if (enemyCount > 0)
             {
                 Transform closest = null;
-                float closestDist = Mathf.Infinity;
+                float closestDistSqr = Mathf.Infinity;
+                Vector3 towerPos = controller.transform.position;
 
-                foreach (var enemy in enemies)
+                for (int i = 0; i < enemyCount; i++)
                 {
-                    float dist = Vector3.Distance(controller.transform.position, enemy.transform.position);
-                    if (dist < closestDist)
+                    Collider col = enemyBuffer[i];
+                    Vector3 toEnemy = col.transform.position - towerPos;
+                    float distSqr = toEnemy.sqrMagnitude;
+
+                    if (distSqr < closestDistSqr)
                     {
-                        closestDist = dist;
-                        closest = enemy.transform;
+                        closestDistSqr = distSqr;
+                        closest = col.transform;
                     }
                 }
 
                 if (closest != null)
                 {
-                    Collider enemyCol = closest.GetComponent<Collider>();
-                    Vector3 targetPoint = enemyCol != null ? enemyCol.bounds.center : closest.position;
+                    // 타겟 위치 계산 (Collider bounds 고려)
+                    Vector3 targetPoint = closest.TryGetComponent(out Collider enemyCol)
+                        ? enemyCol.bounds.center
+                        : closest.position;
 
-                    // ✅ dir 먼저 계산
+                    // 방향 먼저 계산
                     Vector3 dir = (targetPoint - controller.transform.position).normalized;
 
-                    // ✅ spawnPos는 위로 + 방향으로 살짝 띄움
+                    // spawnPos는 위로 살짝 띄움
                     Vector3 spawnPos = controller.transform.position + dir + Vector3.up * 7f;
 
-                    GameObject bullet = GameObject.Instantiate(controller.GetBulletPrefab(), spawnPos, Quaternion.identity);
+                    GameObject bullet = GameObject.Instantiate(
+                        original: controller.GetBulletPrefab(),
+                        position: spawnPos,
+                        rotation: Quaternion.LookRotation(dir)
+                    );
 
-                    Rigidbody rb = bullet.GetComponent<Rigidbody>();
-                    if (rb != null)
-                    {
+                    if (bullet.TryGetComponent(out Rigidbody rb))
                         rb.velocity = dir * 10f;
-                        bullet.transform.rotation = Quaternion.LookRotation(dir);
+
+                    if (bullet.TryGetComponent(out BulletController bc))
+                    {
+                        bc.SetDamage(realDamage);
+                        bc.SetTarget(closest);
                     }
 
-                    Collider bulletCol = bullet.GetComponent<Collider>();
-                    Collider towerCol = controller.GetComponent<Collider>();
-
-                    BulletController bc = bullet.GetComponent<BulletController>();
-                    if (bc != null)
-                    {
-                        bc.SetTarget(closest); // 적 Transform 전달
-                    }
-
-                    
-                    if (bulletCol != null && towerCol != null)
-                    {
+                    if (bullet.TryGetComponent(out Collider bulletCol) &&
+                        controller.TryGetComponent(out Collider towerCol))
                         Physics.IgnoreCollision(bulletCol, towerCol);
-                    }
 
-                    Debug.DrawLine(controller.transform.position, targetPoint, Color.red, 1f);
-                    bullet.transform.forward = dir;
+                    Debug.DrawLine(towerPos, targetPoint, Color.red, 1f);
                 }
 
                 timer = 0;
@@ -83,10 +98,9 @@ public class DefensiveBuilding : Building
     public override void Upgrade()
     {
         base.Upgrade();
-
-        Cooldown = Mathf.Max(0.5f, Cooldown - 0.3f); // 최대 속도 제한
+        cooldown = Mathf.Max(1f, cooldown - 0.5f); // 최대 속도 제한
+        realDamage = Mathf.Min(500, realDamage * 1.5f);
     }
-
 
     public override void OnDestroyed(BuildingLogicController controller)
     {
@@ -94,4 +108,3 @@ public class DefensiveBuilding : Building
         Debug.Log("💥 타워 파괴됨!");
     }
 }
-

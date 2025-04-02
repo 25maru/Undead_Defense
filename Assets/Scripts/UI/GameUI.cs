@@ -21,6 +21,7 @@ public class GameUI : BaseUI
         stageButton.onClick.AddListener(OnClickStageButton);
 
         ResourceManager.Instance.OnGoldChanged += ChangeGold;
+        goldText.text = ResourceManager.Instance.Gold.ToString();
 
         pausePanel.SetActive(false);
     }

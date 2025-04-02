@@ -49,6 +49,7 @@ public class ConstructionController : MonoBehaviour
 
     public void StartConstruction(Building buildingData)
     {
+        buildingData.CheckDate(LevelManager.Instance.Cycle.CurrentDay);
         building = buildingData;
         StartCoroutine(ConstructionRoutine());
     }

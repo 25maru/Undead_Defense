@@ -46,6 +46,12 @@ public class LevelCycle : MonoBehaviour
     /// </summary>
     public void StartDay()
     {
+        if (CurrentDay >= levelData.enemyWaves.Count)
+        {
+            UIManager.Instance.SetGameClearUI();
+            return;
+        }
+
         CurrentDay++;
         CurrentState = CycleState.Day;
         OnDayStarted?.Invoke(CurrentDay);
