@@ -147,6 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 958331269451419535, guid: 71145a878c5d8438c80fa756b4437384,
     type: 3}
+  goldPrefab: {fileID: 0}
   upgradedPrefab: {fileID: 7806598124904848306, guid: 1760e0dc56d91ac4387443244c45f564,
     type: 3}
   constructionEffectPrefab: {fileID: 5475108461781026497, guid: 2949de683684b7b4c99020ec1ae8e557,
@@ -220,13 +221,13 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.016460419
-        value: 0.05882454
+        time: 0
+        value: 0.04901961
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -238,8 +239,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 0.007843138}
+      key1: {r: 1, g: 1, b: 1, a: 0.007843138}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -271,7 +272,7 @@ LineRenderer:
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}
-    shadowBias: 0.5
+    shadowBias: 0
     generateLightingData: 0
   m_MaskInteraction: 0
   m_UseWorldSpace: 1

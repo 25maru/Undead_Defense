@@ -10526,7 +10526,7 @@ MonoBehaviour:
     m_Bits: 392
   dropItem: {fileID: 3322109618237949676, guid: c05b02f21cc9c334393350a41fdebd4d,
     type: 3}
-  dropRate: 50
+  dropRate: 100
   materials: []
 --- !u!114 &6750917442330421684
 MonoBehaviour:
