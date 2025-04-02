@@ -42,6 +42,9 @@ public class NightStartTrigger : MonoBehaviour
     private readonly float lightDayXRotation = 50f;
     private readonly float lightNightXRotation = 230f;
 
+    private bool inputBlocked;
+    private bool hasReleasedKeySinceBlock = true;
+
     private bool playerInZone = false;
     private bool isHolding = false;
     private float holdTimer = 0f;
@@ -87,10 +90,12 @@ public class NightStartTrigger : MonoBehaviour
             }
         }
 
-        if (!playerInZone || levelCycle.CurrentState != LevelCycle.CycleState.Day) return;
+        if (!playerInZone || inputBlocked || levelCycle.CurrentState != LevelCycle.CycleState.Day) return;
 
         if (Input.GetKey(holdKey))
         {
+            if (!hasReleasedKeySinceBlock) return;
+
             if (!isHolding)
             {
                 isHolding = true;
@@ -107,11 +112,13 @@ public class NightStartTrigger : MonoBehaviour
             {
                 levelCycle.StartNight();
                 ResetHold();
+                hasReleasedKeySinceBlock = false;
             }
         }
-        else if (isHolding)
+        else
         {
             ResetHold();
+            hasReleasedKeySinceBlock = true;
         }
     }
 
@@ -192,6 +199,20 @@ public class NightStartTrigger : MonoBehaviour
         directionalLight.transform.DORotate(targetRotation, transitionDuration)
             .SetEase(transitionEase)
             .OnComplete(() => onComplete?.Invoke());
+    }
+
+    /// <summary>
+    /// 외부에서 입력 차단 여부를 설정합니다.
+    /// </summary>
+    public void BlockInput(bool block)
+    {
+        inputBlocked = block;
+
+        if (block)
+        {
+            hasReleasedKeySinceBlock = false;
+            ResetHold();
+        }
     }
 
 #if UNITY_EDITOR
