@@ -165,7 +165,7 @@ MonoBehaviour:
   playerOrderCollider: {fileID: 3084945108937497883}
   rotateSpeed: 10
   moveSpeed: 8
-  damage: 10
+  damage: 35
   projectileSpeed: 15
   downSpeed: 10
   groundMask:
