@@ -35,7 +35,7 @@ public class ProjectileController : MonoBehaviour
         if(target != null && Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
             target.GetComponent<Health>().OnDamaged(damage);
-            Destroy(this.gameObject);  //¿ÀºêÁ§Æ®Ç®¸µ ¸¸µé¸é ´ëÃ¼
+            Destroy(this.gameObject);  //ì˜¤ë¸Œì íŠ¸í’€ë§ ë§Œë“¤ë©´ ëŒ€ì²´
         }
     }
 }

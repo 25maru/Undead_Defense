@@ -5,8 +5,8 @@ using UnityEngine;
 public class SoldierMoveState : SoldierBaseState
 {
     Vector3 lastPosition;
-    float stuckTime = 0f; // ³¢ÀÎ ½Ã°£ Ã¼Å©
-    float stuckThreshold = 2f; // 2ÃÊ ÀÌ»ó ³¢¿© ÀÖÀ¸¸é »èÁ¦
+    float stuckTime = 0f; // ë¼ì¸ ì‹œê°„ ì²´í¬
+    float stuckThreshold = 2f; // 2ì´ˆ ì´ìƒ ë¼ì—¬ ìˆìœ¼ë©´ ì‚­ì œ
     float minMoveDistance = 0.05f;
     public SoldierMoveState(SoldierStateMachine soldierStateMachine) : base(soldierStateMachine)
     {
@@ -31,7 +31,7 @@ public class SoldierMoveState : SoldierBaseState
             soldierStateMachine.ChangeState(soldierStateMachine.IdleState);
             return;
         }
-        if(soldier.target != null && Vector3.Distance(soldier.target.position,soldier.transform.position) <= soldier.attackDistance /* - 0.1f ¿©À¯°ª */ )
+        if(soldier.target != null && Vector3.Distance(soldier.target.position,soldier.transform.position) <= soldier.attackDistance /* - 0.1f ì—¬ìœ ê°’ */ )
         {
             soldierStateMachine.ChangeState(soldierStateMachine.AttackState);
             return;
