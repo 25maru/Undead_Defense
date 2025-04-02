@@ -23,8 +23,12 @@ public class ProjectileController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        transform.rotation = Quaternion.LookRotation(target.position - transform.position);
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        if(target != null)
+        {
+            transform.rotation = Quaternion.LookRotation(target.position - transform.position);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        }
+        
     }
     void OnHit()
     {
