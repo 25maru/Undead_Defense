@@ -48,6 +48,7 @@ public class LevelCycle : MonoBehaviour
     {
         if (CurrentDay >= levelData.enemyWaves.Count)
         {
+            UIManager.Instance.stageUI.Stages[1].isCleared = true;
             UIManager.Instance.SetGameClearUI();
             return;
         }

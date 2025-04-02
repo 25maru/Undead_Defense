@@ -56,12 +56,12 @@ public class BulletController : MonoBehaviour
         {
             if (collision.gameObject.TryGetComponent(out Monster enemy))
             {
-                // enemy.OnHit(damage);
+                enemy.OnHit(damage);
 
-                foreach (Monster monster in hitTarget)
-                {
-                    monster.OnHit(damage);
-                }
+                // foreach (Monster monster in hitTarget)
+                // {
+                //     monster.OnHit(damage);
+                // }
             }
 
             if (crackPrefab != null)
@@ -73,25 +73,25 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            if (other.TryGetComponent(out Monster enemy))
-            {
-                hitTarget.Add(enemy);
-            }
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    //     {
+    //         if (other.TryGetComponent(out Monster enemy))
+    //         {
+    //             hitTarget.Add(enemy);
+    //         }
+    //     }
+    // }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            if (other.TryGetComponent(out Monster enemy))
-            {
-                hitTarget.Remove(enemy);
-            }
-        }
-    }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+    //     {
+    //         if (other.TryGetComponent(out Monster enemy))
+    //         {
+    //             hitTarget.Remove(enemy);
+    //         }
+    //     }
+    // }
 }

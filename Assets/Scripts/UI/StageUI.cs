@@ -20,6 +20,8 @@ public class StageUI : BaseUI
     [SerializeField] private Button secondStageButton;
     [SerializeField] private Button thirdStageButton;
 
+    public List<Stage> Stages => stages;
+
 
     public override void Init(UIManager uiManager)
     {
