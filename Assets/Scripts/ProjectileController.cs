@@ -32,7 +32,7 @@ public class ProjectileController : MonoBehaviour
     }
     void OnHit()
     {
-        if(Vector3.Distance(transform.position, target.position) <= 0.1f)
+        if(target != null && Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
             target.GetComponent<Health>().OnDamaged(damage);
             Destroy(this.gameObject);  //오브젝트풀링 만들면 대체

@@ -23,6 +23,7 @@ public class SoldierAttackState : SoldierBaseState
         if (soldier.target == null || Vector3.Distance(soldier.target.position, soldier.transform.position) >= soldier.attackDistance)
         {
             soldierStateMachine.ChangeState(soldierStateMachine.preState);
+            return;
         }
         if(Vector3.Angle(soldier.model.forward, soldier.target.position - soldier.transform.position) <= 10f)
         {
@@ -40,6 +41,8 @@ public class SoldierAttackState : SoldierBaseState
     }
     void Rotate()
     {
+        if(soldier.target == null)
+            return;
         Vector3 direction = soldier.target.position - soldier.transform.position;
         direction.y = 0f;
         if (direction != Vector3.zero)
