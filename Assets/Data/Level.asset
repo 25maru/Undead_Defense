@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4b0df66f7ac0d947a54f5cf616faa74, type: 3}
+  m_Name: Level
+  m_EditorClassIdentifier: 
+  levelName: Tutorial
+  enemyWaves:
+  - {fileID: 11400000, guid: c820f4adb14bb374c9868939a863b6ba, type: 2}
+  - {fileID: 11400000, guid: 574839218a035bb4b8f0af8b547ddbcb, type: 2}
+  - {fileID: 11400000, guid: a681d803d6b51544b8a3efef4cb6b4bd, type: 2}
+  - {fileID: 11400000, guid: f66ea43a07e08ad469ce49e2028230ef, type: 2}
+  - {fileID: 11400000, guid: 073243691e2b0c24cbd35dae9a0a7588, type: 2}
