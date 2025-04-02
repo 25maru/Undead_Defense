@@ -94,6 +94,7 @@ public class Soldier : MonoBehaviour
     }
     public void EndOrder()
     {
+        orderTarget = null;
         underOrderCircle.SetActive(false);
     }
     public void Hold()
