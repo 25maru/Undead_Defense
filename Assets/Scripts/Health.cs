@@ -41,9 +41,6 @@ public class Health : MonoBehaviour
     {
         hp -= damage;
         
-        if(hp <= 0)
-            onDeath?.Invoke();
-        
         return hp <= 0;
     }
 
@@ -58,7 +55,7 @@ public class Health : MonoBehaviour
 
         healthBar.SetHealth(hp / maxHp);
 
-        if (_hp == 0)
+        if (_hp <= 0)
         {
             onDeath?.Invoke();
         }
