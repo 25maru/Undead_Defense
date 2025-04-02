@@ -9,7 +9,7 @@ public class ResourceManager : MonoSingleton<ResourceManager>
     /// <summary>
     /// 현재 보유 중인 골드입니다.
     /// </summary>
-    public int Gold { get; private set; }
+    public int Gold { get; private set; } = 3;
 
     /// <summary>
     /// 골드가 변경될 때 호출되는 이벤트입니다.

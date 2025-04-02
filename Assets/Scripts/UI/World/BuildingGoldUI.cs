@@ -23,6 +23,7 @@ public class BuildingGoldUI : WorldUIBase
     [SerializeField] private AudioClip goldSoundClip;
     [Range(0f, 1f)]
     [SerializeField] private float goldSoundVolume;
+    [SerializeField] private float fillInterval = 0.2f;
     [SerializeField] private float fillDuration = 0.2f;
 
     [Header("Tween")]
@@ -32,6 +33,8 @@ public class BuildingGoldUI : WorldUIBase
     private int totalGold;
     private int currentFilled;
     private bool isBuilt;
+
+    public float FillInterval => fillInterval;
 
     private void Start()
     {
@@ -78,14 +81,6 @@ public class BuildingGoldUI : WorldUIBase
     /// </summary>
     public void FillNext()
     {
-        if (isBuilt) return;
-
-        if (IsComplete())
-        {
-            isBuilt = true;
-            return;
-        }
-
         int filled = 0;
         foreach (var group in goldGroups)
         {

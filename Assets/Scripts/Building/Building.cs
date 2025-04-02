@@ -12,6 +12,8 @@ public abstract class Building
     public int MaxHP = 100;
     public int CurrentHP;
     public bool IsCritical = false;
+
+    protected int currentDate = -1;
     
     public BuildingType Type { get; protected set; }
 
@@ -21,6 +23,20 @@ public abstract class Building
         BuildCost = cost;
         BuildTime = buildTime;
         CurrentHP = MaxHP;
+    }
+
+    public virtual bool CheckDate(int date)
+    {
+        if (currentDate == date)
+        {
+            Debug.Log("하루가 지나야 다시 작업할 수 있습니다.");
+            return false;
+        }
+        else
+        {
+            currentDate = date;
+            return true;
+        }
     }
 
     public virtual void Upgrade()

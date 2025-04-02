@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,9 +7,21 @@ using UnityEngine.UI;
 
 public class BuildTriggerTest : MonoBehaviour
 {
+    public enum TargetTask
+    {
+        None,
+        Build,
+        Upgrade
+    }
+
+    [Header("건물 설정")]
+    [SerializeField] private TargetTask task;
+    [SerializeField] private BuildingType type;
+    [SerializeField] private int requiredGold;
+
     [Header("입력 설정")]
     [SerializeField] private KeyCode holdKey = KeyCode.Space;
-    [SerializeField] private float holdDuration = 2f;
+    // [SerializeField] private float holdDuration = 2f;
 
     [Header("UI")]
     [SerializeField] private GameObject goldUIRoot;
@@ -16,21 +29,34 @@ public class BuildTriggerTest : MonoBehaviour
 
     [Header("디버그 (테스트용)")]
     [SerializeField] private bool testMode;
-    [SerializeField] private BuildingType type;
-    [SerializeField] private int requiredGold;
 
     private ResourceManager resourceManager;
     private ConstructionController constructionController;
+    private BuildingLogicController buildingLogicController;
     private Building building;
 
+    private (ConstructionController, BuildingLogicController) controller;
+
+    private int useGold = 0;
     private bool playerInZone = false;
     private bool isHolding = false;
+    private bool isBuilt = false;
     private float holdTimer = 0f;
 
     private void Start()
     {
         resourceManager = ResourceManager.Instance;
-        constructionController = GetComponent<ConstructionController>();
+
+        switch (task)
+        {
+            case TargetTask.Build:
+                constructionController = GetComponent<ConstructionController>();
+                break;
+
+            case TargetTask.Upgrade:
+                buildingLogicController = GetComponent<BuildingLogicController>();
+                break;
+        }
 
         switch (type)
         {
@@ -43,30 +69,42 @@ public class BuildTriggerTest : MonoBehaviour
                 break;
 
             case BuildingType.Spawner:
-                building = new SpawnerBuilding(new());
+                building = new SpawnerBuilding(new(), 5);
                 break;
         }
-        
-        if (testMode) building.BuildCost = requiredGold;
-        else requiredGold = building.BuildCost;
 
+        building.BuildCost = requiredGold;
         goldUI.Setup(requiredGold);
+    }
+
+    private void Task()
+    {
+        switch (task)
+        {
+            case TargetTask.Build:
+                constructionController.StartConstruction(building);
+                break;
+
+            case TargetTask.Upgrade:
+                buildingLogicController.Upgrade();
+                break;
+        }
     }
 
     private void Update()
     {
-        if (!playerInZone) return;
+        if (!playerInZone || isBuilt) return;
 
-        // 테스트 모드
+        // 테스트 모드 (골드 소비 X)
         if (testMode)
         {
             HandleHold(() =>
             {
-                goldUI.FillNext(); // 골드 UI 채우기 (실제 자원 소비 없음)
+                goldUI.FillNext();
                 if (goldUI.IsComplete())
                 {
                     LevelManager.Instance.NightTrigger.BlockInput(false);
-                    constructionController.StartConstruction(building);
+                    Task();
                     Invoke(nameof(ResetHold), 0.5f);
                 }
             });
@@ -74,7 +112,12 @@ public class BuildTriggerTest : MonoBehaviour
         }
 
         // 일반 모드
-        if (resourceManager.Gold < building.BuildCost) return;
+        if (resourceManager.Gold <= 0)
+        {
+            ResetHold();
+            ResourceManager.Instance.AddGold(useGold);
+            return;
+        }
 
         HandleHold(() =>
         {
@@ -83,8 +126,9 @@ public class BuildTriggerTest : MonoBehaviour
 
             if (goldUI.IsComplete())
             {
+                isBuilt = true;
                 LevelManager.Instance.NightTrigger.BlockInput(false);
-                constructionController.StartConstruction(building);
+                Task();
                 Invoke(nameof(ResetHold), 0.5f);
             }
         });
@@ -104,9 +148,10 @@ public class BuildTriggerTest : MonoBehaviour
             holdTimer += Time.deltaTime;
 
             // 시간에 따라 Fill 동작
-            float interval = holdDuration / building.BuildCost;
+            float interval = goldUI.FillInterval;
             while (holdTimer >= interval)
             {
+                useGold++;
                 holdTimer -= interval;
                 onCompleteStep.Invoke();
             }
@@ -114,6 +159,7 @@ public class BuildTriggerTest : MonoBehaviour
         else if (isHolding)
         {
             ResetHold();
+            ResourceManager.Instance.AddGold(useGold);
         }
     }
 
@@ -121,13 +167,19 @@ public class BuildTriggerTest : MonoBehaviour
     {
         isHolding = false;
         holdTimer = 0f;
-        // goldUIRoot.SetActive(false);
+        useGold = 0;
         goldUI.ResetUI();
     }
 
     private void ExitZone()
     {
         playerInZone = false;
+
+        if (!isBuilt)
+        {
+            ResourceManager.Instance.AddGold(useGold);
+        }
+
         LevelManager.Instance.NightTrigger.BlockInput(false);
         goldUI.SetGoldVisible(false);
         ResetHold();
@@ -135,7 +187,7 @@ public class BuildTriggerTest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isBuilt)
         {
             playerInZone = true;
             LevelManager.Instance.NightTrigger.BlockInput(true);

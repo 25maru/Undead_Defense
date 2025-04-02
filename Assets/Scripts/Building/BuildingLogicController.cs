@@ -32,8 +32,6 @@ public class BuildingLogicController : MonoBehaviour
     [SerializeField] private GameObject healthBarPrefab;
     private HealthBar healthBarInstance;
 
-
-
     private void DrawRangeCircle(float radius)
     {
         if (rangeRenderer == null) return;
@@ -61,6 +59,7 @@ public class BuildingLogicController : MonoBehaviour
                 else
                     Debug.LogWarning("⚠️ 병사 프리팹 리스트가 비어있습니다.");
                 break;
+
             case BuildingType.Defense:
                 building = new DefensiveBuilding();
                 break;
@@ -72,7 +71,7 @@ public class BuildingLogicController : MonoBehaviour
         
         if (building is DefensiveBuilding def)
         {
-            DrawRangeCircle(def.Range);
+            DrawRangeCircle(def.attackRange);
         }
         
         // 체력바 프리팹 생성 및 세팅
@@ -98,6 +97,38 @@ public class BuildingLogicController : MonoBehaviour
         isBuilt = true;
     }
 
+    public void Initialize(Building buildingData)
+    {
+        building = buildingData;
+
+        if (building is DefensiveBuilding def)
+        {
+            DrawRangeCircle(def.attackRange);
+        }
+
+        // 체력바 프리팹 생성 및 세팅
+        if (healthBarPrefab != null)
+        {
+            GameObject bar = Instantiate(healthBarPrefab, transform);
+
+            // 부모 크기로 조절
+            bar.transform.localScale = Vector3.one * (0.02f / transform.localScale.x);
+
+            // 머리 위로 띄우기
+            bar.transform.localPosition = Vector3.up * (bar.transform.localScale.x * 250f);
+
+            healthBarInstance = bar.GetComponent<HealthBar>();
+
+            if (healthBarInstance != null)
+            {
+                float hp = (float)building.CurrentHP / building.MaxHP;
+                healthBarInstance.SetHealth(hp);
+            }
+        }
+
+        isBuilt = true;
+    }
+
     private void Update()
     {
         if (isBuilt && building != null)
@@ -109,6 +140,8 @@ public class BuildingLogicController : MonoBehaviour
     public void Upgrade()
     {
         if (building == null || upgradedPrefab == null) return;
+
+        if (!building.CheckDate(LevelManager.Instance.Cycle.CurrentDay)) return;
 
         StartCoroutine(UpgradeRoutine());
     }
@@ -136,10 +169,10 @@ public class BuildingLogicController : MonoBehaviour
 
         // 새로운 업그레이드 프리팹 생성
         GameObject newObj = Instantiate(upgradedPrefab, transform.position, transform.rotation);
-        var newController = newObj.GetComponent<BuildingLogicController>();
-        if (newController != null)
+        if (newObj.TryGetComponent(out BuildingLogicController newController))
         {
-            newController.Initialize(building.Type); // 상태 넘겨줌
+            // newController.Initialize(building.Type); // 상태 넘겨줌
+            newController.Initialize(building); // 상태 넘겨줌
         }
 
         Debug.Log("✅ 업그레이드 완료!");

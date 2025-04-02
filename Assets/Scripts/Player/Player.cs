@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         playerStateMachine.PhysicsUpdate();
-        move();
+        Move();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
         }
     }
     
-    void move()
+    void Move()
     {
         if(isDeath)
             return;

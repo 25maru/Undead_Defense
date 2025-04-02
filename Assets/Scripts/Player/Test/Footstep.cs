@@ -8,7 +8,7 @@ public class Footstep : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] private float footstepAudioVolume = 0.5f;
     [SerializeField] private AudioClip[] footstepAudioClips;
-    [SerializeField] private CharacterController _controller;
+    [SerializeField] private CharacterController controller;
 
     // 걷기 & 달리기 애니메이션의 이벤트 수신
     private void OnFootstep(AnimationEvent animationEvent)
@@ -18,7 +18,15 @@ public class Footstep : MonoBehaviour
             if (footstepAudioClips.Length > 0)
             {
                 var index = Random.Range(0, footstepAudioClips.Length);
-                AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(_controller.center), footstepAudioVolume);
+
+                if (controller != null)
+                {
+                    AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.TransformPoint(controller.center), footstepAudioVolume);
+                }
+                else
+                {
+                    AudioSource.PlayClipAtPoint(footstepAudioClips[index], transform.position, footstepAudioVolume);
+                }
             }
         }
     }

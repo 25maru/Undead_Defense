@@ -439,7 +439,7 @@ MonoBehaviour:
     - {fileID: 4057041364051392960}
     - {fileID: 7632781786896814717}
     - {fileID: 1125413605293166264}
-  goldSoundClip: {fileID: 8300000, guid: 20e623dc1afe9ac46b205d3758b2743f, type: 3}
+  goldSoundClip: {fileID: 8300000, guid: 3a9677db3c2196e428780aa0a7d93533, type: 3}
   goldSoundVolume: 1
   fillDuration: 0.5
   transitionEase: 6
