@@ -27,7 +27,7 @@ public class SoldierMoveState : SoldierBaseState
             soldierStateMachine.ChangeState(soldierStateMachine.IdleState);
             return;
         }
-        if(Vector3.Distance(soldier.target.position,soldier.transform.position) <= soldier.attackDistance /* - 0.1f ì—¬ìœ ê°’ */ )
+        if(soldier.target != null && Vector3.Distance(soldier.target.position,soldier.transform.position) <= soldier.attackDistance /* - 0.1f ¿©À¯°ª */ )
         {
             soldierStateMachine.ChangeState(soldierStateMachine.AttackState);
             return;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6747135118371108072}
   - component: {fileID: 2418000960287145862}
   - component: {fileID: 4196222612194239582}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ATK_Tower1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

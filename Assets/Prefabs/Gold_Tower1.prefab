@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1782469175424406231}
   - component: {fileID: 4665033017869070532}
   - component: {fileID: 5819096662010636052}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gold_Tower1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
