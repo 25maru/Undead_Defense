@@ -115,33 +115,29 @@ public class Monster : MonoBehaviour, IChase
         if(Time.time - lastAttackTime > attackRate)
         {
             lastAttackTime = Time.time;
-            StartCoroutine(DelayAttack(0.6f));
             
             sound.PlaySound(SoundType.Attack);
             
             ChangeState(State.Attack);
         }
     }
-
-    IEnumerator DelayAttack(float time)
+    
+    public void HitInDistance()
     {
-        yield return new WaitForSeconds(time);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, distance, targetLayer);
 
-        if (target.gameObject.layer == LayerMask.NameToLayer("Player") ||
-            target.gameObject.layer == LayerMask.NameToLayer("Soldier"))
+        foreach (var hitCollider in hitColliders)
         {
-           var targetHealth = target.GetComponent<Health>();
-           targetHealth?.OnDamaged(attackPower);
-        }
-
-        if (target.gameObject.layer == LayerMask.NameToLayer("Building"))
-        {
-            var targetBuilding = target.GetComponent<BuildingLogicController>();
-            targetBuilding?.TakeDamage(attackPower);
+            if (hitCollider.transform == target)
+            {
+                var targetHealth = hitCollider.GetComponent<Health>();
+                var targetBuilding = hitCollider.GetComponent<BuildingLogicController>();
+                targetHealth?.OnDamaged(attackPower);
+                targetBuilding?.TakeDamage(attackPower);
+            }
         }
     }
     
-
     protected virtual void Move()
     {
         if (inRange)

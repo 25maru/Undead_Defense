@@ -10,11 +10,10 @@ public class SoldierDieState : SoldierBaseState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(soldier.AnimationData.DieParameterHash);
+        soldier.animator.SetTrigger(soldierStateMachine.soldier.AnimationData.DieParameterHash);
     }
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(soldier.AnimationData.DieParameterHash);
     }
 }

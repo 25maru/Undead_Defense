@@ -23,15 +23,19 @@ public class ProjectileController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (target.position - transform.position != Vector3.zero)
+        if(target != null)
         {
-            transform.rotation = Quaternion.LookRotation(target.position - transform.position);
+            if (target.position - transform.position != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(target.position - transform.position);
+            }
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
         }
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        
     }
     void OnHit()
     {
-        if(Vector3.Distance(transform.position, target.position) <= 0.1f)
+        if(target != null && Vector3.Distance(transform.position, target.position) <= 0.1f)
         {
             target.GetComponent<Health>().OnDamaged(damage);
             Destroy(this.gameObject);  //������ƮǮ�� ����� ��ü

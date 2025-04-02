@@ -12,13 +12,12 @@ public class PlayerDieState : PlayerBaseState
     public override void Enter()
     {
         base.Enter();
-        StartAnimation(playerStateMachine.Player.AnimationData.DieParameterHash);
+        player.animator.SetTrigger(playerStateMachine.Player.AnimationData.DieParameterHash);
         playerStateMachine.isDeath = true;
     }
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(playerStateMachine.Player.AnimationData.DieParameterHash);
     }
     public override void Update()
     {
