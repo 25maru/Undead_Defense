@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -99,7 +100,8 @@ public class DefensiveBuilding : Building
     {
         base.Upgrade();
         cooldown = Mathf.Max(1f, cooldown - 0.5f); // 최대 속도 제한
-        realDamage = Mathf.Min(500, realDamage * 1.5f);
+        attackRange = Mathf.Min(50f, attackRange + 5);
+        realDamage = Mathf.Min(500, realDamage * 2f);
     }
 
     public override void OnDestroyed(BuildingLogicController controller)

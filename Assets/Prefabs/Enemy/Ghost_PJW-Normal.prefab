@@ -10447,9 +10447,9 @@ MonoBehaviour:
   targetLayer:
     serializedVersion: 2
     m_Bits: 392
-  dropItem: {fileID: 3322109618237949676, guid: c05b02f21cc9c334393350a41fdebd4d,
-    type: 3}
-  dropRate: 50
+  dropTable:
+  - item: {fileID: 3322109618237949676, guid: c05b02f21cc9c334393350a41fdebd4d, type: 3}
+    rate: 0.5
   materials: []
 --- !u!114 &-7000011465290545699
 MonoBehaviour:
@@ -11093,7 +11093,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8143263539459749592
 MonoBehaviour:

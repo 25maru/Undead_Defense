@@ -10,6 +10,7 @@ public class GameUI : BaseUI
     [SerializeField] private Button continueButton;
     [SerializeField] private Button stageButton;
 
+    [SerializeField] private TextMeshProUGUI dayText;
     [SerializeField] private TextMeshProUGUI goldText;
 
     public override void Init(UIManager uiManager)
@@ -20,7 +21,9 @@ public class GameUI : BaseUI
         continueButton.onClick.AddListener(OnClickContinueButton);
         stageButton.onClick.AddListener(OnClickStageButton);
 
+        LevelManager.Instance.Cycle.OnDayStarted += ChangeDay;
         ResourceManager.Instance.OnGoldChanged += ChangeGold;
+        
         goldText.text = ResourceManager.Instance.Gold.ToString();
 
         pausePanel.SetActive(false);
@@ -44,6 +47,11 @@ public class GameUI : BaseUI
     {
         UIManager.Instance.stageUI.UpdateUI();
         UIManager.Instance.ChangeState(UIState.STAGE);
+    }
+
+    public void ChangeDay(int day)
+    {
+        dayText.text = $"Day {day}";
     }
 
     public void ChangeGold(int gold)

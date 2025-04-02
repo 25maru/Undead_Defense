@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 74293856721240319}
   - component: {fileID: 1337630177555247909}
   - component: {fileID: 590672189644754491}
-  - component: {fileID: -1951637651304553889}
+  - component: {fileID: -8429303824147858919}
   - component: {fileID: 704020269802485874}
   - component: {fileID: 828694136797499440}
   - component: {fileID: 7544207438581466225}
   m_Layer: 0
-  m_Name: Bullet1
+  m_Name: Bullet1 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,8 +65,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c2d5e7016767ef744ba746521aacf3e3, type: 2}
-  - {fileID: 2100000, guid: 4b3030709eb6cf641a331a259a719a3d, type: 2}
+  - {fileID: 2100000, guid: 981afa0741d0e2547a600c3dc5213745, type: 2}
+  - {fileID: 2100000, guid: 2254c2dbaf2b02b4ea4566a8813d48e5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -88,7 +88,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &-1951637651304553889
+--- !u!135 &-8429303824147858919
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -174,5 +174,5 @@ MonoBehaviour:
   rotateSpeed: 5
   lifeTime: 5
   damage: 75
-  crackPrefab: {fileID: 7150238723940800004, guid: f77ac68b1bb3e4b46beb3f5b6c048640,
+  crackPrefab: {fileID: 7150238723940800004, guid: a9db5962267ba9c479e229f61496a602,
     type: 3}

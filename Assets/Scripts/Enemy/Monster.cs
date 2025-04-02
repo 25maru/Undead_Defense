@@ -3,11 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public interface IChase
 {
     float chaseDistance { get; set; }
     void ChaseTarget();
+}
+
+[Serializable]
+public class DropTable
+{
+    public GameObject item;
+
+    [Range(0f, 1f)]
+    public float rate = 0.5f;
 }
 
 public class Monster : MonoBehaviour, IChase
@@ -41,9 +51,7 @@ public class Monster : MonoBehaviour, IChase
     [SerializeField] private LayerMask targetLayer;
     
     [Header("Drop Item")]
-    [SerializeField] private GameObject dropItem;
-    [Range(0f, 100f)]
-    [SerializeField] private float dropRate = 50f;
+    [SerializeField] private List<DropTable> dropTable;
     
     protected NavMeshAgent navMeshAgent;
     protected Animator anim;
@@ -132,10 +140,11 @@ public class Monster : MonoBehaviour, IChase
         {
             if (hitCollider.transform == target)
             {
-                var targetHealth = hitCollider.GetComponent<Health>();
-                var targetBuilding = hitCollider.GetComponent<BuildingLogicController>();
-                targetHealth?.OnDamaged(attackPower);
-                targetBuilding?.TakeDamage(attackPower);
+                if (hitCollider.TryGetComponent(out Health targetHealth))
+                    targetHealth.OnDamaged(attackPower);
+                
+                if (hitCollider.TryGetComponent(out BuildingLogicController targetBuilding))
+                    targetBuilding.TakeDamage(attackPower);
             }
         }
     }
@@ -236,9 +245,15 @@ public class Monster : MonoBehaviour, IChase
 
     protected virtual void DropItem()
     {
-        if (UnityEngine.Random.Range(0f, 100f) <= dropRate)
+        for (int i = 0; i < dropTable.Count; i++)
         {
-            Instantiate(dropItem, transform.position + (Vector3.up * 0.25f), Quaternion.identity);
+            Vector2 randomCircle = Random.insideUnitCircle.normalized * Random.Range(0f, 0.5f);
+            Vector3 offset = new(randomCircle.x, 0, randomCircle.y);
+
+            if (Random.Range(0f, 1f) <= dropTable[i].rate)
+            {
+                Instantiate(dropTable[i].item, transform.position + offset + (Vector3.up * 0.25f), Quaternion.identity);
+            }
         }
     }
     

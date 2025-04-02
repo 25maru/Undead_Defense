@@ -153,6 +153,8 @@ public class LevelManager : MonoSingleton<LevelManager>
     {
         foreach (var enemyInfo in group.enemies)
         {
+            enemiesAlive += enemyInfo.count;
+
             for (int i = 0; i < enemyInfo.count; i++)
             {
                 GameObject enemy = Instantiate(enemyInfo.enemyPrefab, spawnPoint.GetSpawnPosition(), Quaternion.identity);
@@ -165,7 +167,6 @@ public class LevelManager : MonoSingleton<LevelManager>
                         ReportEnemyDeath();
                     }
                     monster.health.AddDieEvent(OnMonsterDeath);
-                    enemiesAlive++;
                 }
 
                 yield return new WaitForSeconds(enemyInfo.delayBetweenSpawn);

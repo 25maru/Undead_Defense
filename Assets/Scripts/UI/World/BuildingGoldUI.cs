@@ -19,16 +19,19 @@ public class GoldGroup
 public class BuildingGoldUI : WorldUIBase
 {
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private RectTransform buildingName;
     [SerializeField] private List<GoldGroup> goldGroups;
+
+    [Header("사운드")]
     [SerializeField] private AudioClip goldSoundClip;
     [Range(0f, 1f)]
     [SerializeField] private float goldSoundVolume;
-    [SerializeField] private float fillInterval = 0.2f;
-    [SerializeField] private float fillDuration = 0.2f;
 
     [Header("Tween")]
     [SerializeField] private Ease transitionEase = Ease.OutQuad;
     [SerializeField] private float transitionDuration = 0.5f;
+    [SerializeField] private float fillInterval = 0.2f;
+    [SerializeField] private float fillDuration = 0.2f;
 
     private int totalGold;
     private int currentFilled;
@@ -72,6 +75,51 @@ public class BuildingGoldUI : WorldUIBase
             ApplyDropEffect(group.golds.GetRange(0, countToActivate));
 
             remaining -= countToActivate;
+        }
+        
+        float highestY = float.MinValue;
+        RectTransform topGold = null;
+
+        foreach (var group in goldGroups)
+        {
+            if (group.groupParent.gameObject.activeSelf)
+            {
+                float groupY = group.groupParent.anchoredPosition.y;
+                if (groupY > highestY)
+                {
+                    highestY = groupY;
+                    topGold = group.groupParent;
+                }
+            }
+        }
+
+        // foreach (var group in goldGroups)
+        // {
+        //     foreach (var gold in group.golds)
+        //     {
+        //         if (gold.parent.gameObject.activeSelf)
+        //         {
+        //             float y = gold.anchoredPosition.y + ((RectTransform)gold.parent).anchoredPosition.y;
+        //             if (y > highestY)
+        //             {
+        //                 highestY = y;
+        //                 topGold = (RectTransform)gold.parent;
+        //             }
+        //         }
+        //     }
+        // }
+
+        if (topGold != null)
+        {
+            float offset = 10f;
+            buildingName.anchoredPosition = new Vector2(
+                buildingName.anchoredPosition.x,
+                topGold.anchoredPosition.y + offset
+            );
+        }
+        else
+        {
+            buildingName.anchoredPosition = Vector2.zero;
         }
     }
 
@@ -142,10 +190,13 @@ public class BuildingGoldUI : WorldUIBase
         {
             foreach (var gold in group.golds)
             {
-                var fill = gold.GetChild(0);
+                var fill = gold.GetChild(0).GetComponent<RectTransform>();
 
                 if (fill.TryGetComponent(out Image image))
                 {
+                    DOTween.Kill(fill);
+                    DOTween.Kill(image);
+                    
                     fill.DOScale(0f, transitionDuration)
                         .SetEase(transitionEase);
 
@@ -157,7 +208,7 @@ public class BuildingGoldUI : WorldUIBase
     }
 
     /// <summary>
-    /// 골드드 UI의 표시 여부를 설정합니다.
+    /// 골드 UI의 표시 여부를 설정합니다.
     /// </summary>
     public void SetGoldVisible(bool visible, Action onComplete = null)
     {

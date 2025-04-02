@@ -9,8 +9,8 @@ public class ProductionBuilding : Building
     private int goldAmount = 1;
     private GameObject goldPrefab;
 
-    private readonly float spawnRadius = 7f; // 생성 반경
-    private readonly float minDistance = 3.5f; // 중심에서 너무 가까운 곳 방지
+    private readonly float spawnRadius = 4f; // 생성 반경
+    private readonly float minDistance = 2f; // 중심에서 너무 가까운 곳 방지
 
     public ProductionBuilding(int gold = 1) : base("Gold Mine", 80, 1.5f)
     {
