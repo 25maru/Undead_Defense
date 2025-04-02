@@ -150,7 +150,7 @@ MonoBehaviour:
   goldPrefab: {fileID: 0}
   upgradedPrefab: {fileID: 7806598124904848306, guid: 1760e0dc56d91ac4387443244c45f564,
     type: 3}
-  constructionEffectPrefab: {fileID: 5475108461781026497, guid: 2949de683684b7b4c99020ec1ae8e557,
+  constructionEffectPrefab: {fileID: 5475108461781026497, guid: 1118d8e9cdc5ca34a9d6e0a52f4a7f0e,
     type: 3}
   soldierPrefabs: []
   rangeRenderer: {fileID: 3174824734647687025}
@@ -376,6 +376,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2647101064860309372, guid: 4f0573bfebee96544858dbd137c2ec0b,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2975107286334074580, guid: 4f0573bfebee96544858dbd137c2ec0b,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -520,6 +525,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5860266980978259099, guid: 4f0573bfebee96544858dbd137c2ec0b,
+        type: 3}
+      propertyPath: m_text
+      value: "\uACF5\uACA9 \uD0C0\uC6CC v2\n"
       objectReference: {fileID: 0}
     - target: {fileID: 6096617323760276233, guid: 4f0573bfebee96544858dbd137c2ec0b,
         type: 3}
