@@ -22,6 +22,7 @@ public class PlayerAttackState : PlayerBaseState
         if(player.target == null)
         {
             playerStateMachine.ChangeState(playerStateMachine.IdleState);
+            return;
         }
         if (Vector3.Angle(player.model.transform.forward, player.target.position - player.transform.position) <= 10f)
         {
@@ -41,6 +42,8 @@ public class PlayerAttackState : PlayerBaseState
     }
     void Rotate()
     {
+        if(player.target == null)
+            return;
         Vector3 direction = player.target.position - player.transform.position;
         direction.y = 0f;
         if (direction != Vector3.zero)

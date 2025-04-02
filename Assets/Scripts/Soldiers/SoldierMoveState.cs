@@ -46,6 +46,11 @@ public class SoldierMoveState : SoldierBaseState
     }
     protected override void Move()
     {
+        if(soldier.orderTarget==null && soldier.target == null)
+        {
+            soldier.agent.ResetPath();
+            return;
+        }
         soldier.agent.SetDestination(soldier.orderTarget != null ? soldier.orderTarget.position : soldier.target.position);
         moveDirection = soldier.agent.desiredVelocity.normalized;
         soldier.agent.nextPosition = soldier.transform.position;
