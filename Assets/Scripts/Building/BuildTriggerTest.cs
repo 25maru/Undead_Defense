@@ -190,6 +190,7 @@ public class BuildTriggerTest : MonoBehaviour
         if (other.CompareTag("Player") && !isBuilt)
         {
             playerInZone = true;
+            Debug.Log("BlockInput(true)");
             LevelManager.Instance.NightTrigger.BlockInput(true);
             goldUI.SetGoldVisible(true);
         }

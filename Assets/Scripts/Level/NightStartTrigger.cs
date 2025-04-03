@@ -90,6 +90,8 @@ public class NightStartTrigger : MonoBehaviour
             }
         }
 
+        Debug.Log($"blockInput: {inputBlocked}");
+
         if (!playerInZone || inputBlocked || levelCycle.CurrentState != LevelCycle.CycleState.Day) return;
 
         if (Input.GetKey(holdKey))
